@@ -37,7 +37,7 @@
 						</tr>
 						<?php if ($this->uri->segment(2) == 'create' || $this->uri->segment(2) == 'create_action') { ?>
 							<tr>
-								<td width='200'>TTD <?php echo form_error('ttd') ?></td>
+								<td >TTD <?php echo form_error('ttd') ?></td>
 								<td><input type="file" class="form-control" name="ttd" id="ttd" placeholder="ttd" required="" value="" onchange="return validasiEkstensi()" />
 									<!-- <div id="preview"></div> -->
 								</td>
@@ -45,7 +45,7 @@
 						<?php } else { ?>
 							<div class="form-group">
 								<tr>
-									<td width='200'>TTD <?php echo form_error('ttd') ?></td>
+									<td >TTD <?php echo form_error('ttd') ?></td>
 									<td>
 										<a href="#modal-dialog" data-bs-toggle="modal"><img src="<?php echo base_url(); ?>assets/dist/img/ttd/<?= $ttd ?>" style="width: 150px;height: 150px;border-radius: 5%;"></img></a>
 										<input type="hidden" name="ttd_lama" value="<?= $ttd ?>">

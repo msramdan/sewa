@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.css" integrity="sha512-J5tsMaZISEmI+Ly68nBDiQyNW6vzBoUlNHGsH8T3DzHTn2h9swZqiMeGm/4WMDxAphi5LMZMNA30LvxaEPiPkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -90,7 +91,7 @@
 
 						<?php if ($this->session->userdata('level_id') == 1) { ?>
 							<li class="nav-item">
-								<a href="<?= base_url() ?>pengembalian" class="nav-link">
+								<a href="<?= base_url() ?>pemeliharaan" class="nav-link">
 									<i class="nav-icon fa fa-wrench"></i>
 									<p>
 										Pemeliharaan
