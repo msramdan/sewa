@@ -76,15 +76,18 @@
 				</tr>
 				<tr>
 					<td>Bukti Pengembalian</td>
-					<td><?php echo $photo; ?></td>
+					<td>
+
+						<?php if ($photo == null) { ?>
+							<p>No File</p>
+						<?php } else { ?>
+							<a href="<?= base_url() ?>peminjaman/download/<?= $photo ?>"><i class="ace-icon fa fa-download"></i>
+							<?php } ?></a>
+					</td>
 				</tr>
 				<tr>
 					<td>Status Pengembalian</td>
 					<td><?php echo $status_pengembalian; ?></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><a href="<?php echo site_url('peminjaman') ?>" class="btn btn-default">Cancel</a></td>
 				</tr>
 			</table>
 

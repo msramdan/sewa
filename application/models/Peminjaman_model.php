@@ -34,7 +34,22 @@ class Peminjaman_model extends CI_Model
 		if ($this->session->userdata('level_id') == 2) {
 			$this->db->where('karyawan_id', pegawai_id($this->session->userdata('userid')));
 		}
-		$this->db->where('status_pengembalian','!=',null);
+		$this->db->where('status_pengembalian', 'Waiting');
+		$this->db->order_by($this->id, $this->order);
+		return $this->db->get($this->table)->result();
+	}
+	function get_all_pengembalian_form()
+	{
+		$this->db->join('pegawai', 'pegawai.pegawai_id = peminjaman.karyawan_id', 'left');
+		$this->db->join('kendaraan', 'kendaraan.kendaraan_id = peminjaman.kendaraan_id', 'left');
+		if ($this->session->userdata('level_id') == 2) {
+			$this->db->where('karyawan_id', pegawai_id($this->session->userdata('userid')));
+		}
+
+		$where2 = "status_pengembalian is NULL";
+		$this->db->where($where2);
+		$this->db->where('status_request', 'Approved');
+		$this->db->or_where('status_pengembalian', 'Reject');
 		$this->db->order_by($this->id, $this->order);
 		return $this->db->get($this->table)->result();
 	}

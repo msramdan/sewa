@@ -36,7 +36,7 @@
 					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 				</li>
 			</ul>
-			
+
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown">
 					<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -63,14 +63,16 @@
 			<div class="sidebar">
 				<nav class="mt-2">
 					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-						<li class="nav-item">
-							<a href="<?= base_url() ?>" class="nav-link">
-								<i class="nav-icon fa fa-home"></i>
-								<p>
-									Dashboard
-								</p>
-							</a>
-						</li>
+						<?php if ($this->session->userdata('level_id') == 1) { ?>
+							<li class="nav-item">
+								<a href="<?= base_url() ?>" class="nav-link">
+									<i class="nav-icon fa fa-home"></i>
+									<p>
+										Dashboard
+									</p>
+								</a>
+							</li>
+						<?php } ?>
 						<li class="nav-item">
 							<a href="<?= base_url() ?>peminjaman" class="nav-link">
 								<i class="nav-icon fa fa-arrow-right"></i>
@@ -84,7 +86,7 @@
 								<i class="nav-icon fa fa-arrow-left"></i>
 								<p>
 									Pengembalian
-									<span class="badge badge-info right">2</span>
+									<!-- <span class="badge badge-info right">2</span> -->
 								</p>
 							</a>
 						</li>

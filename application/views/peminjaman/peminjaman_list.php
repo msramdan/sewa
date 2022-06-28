@@ -52,7 +52,7 @@
 								<?php if ($this->session->userdata('level_id') == 1) { ?>
 									<td><?php echo $peminjaman->nama_pegawai ?></td>
 								<?php } ?>
-								<td><?php echo $peminjaman->nopol ?></td>
+								<td><?php echo $peminjaman->nopol ?> - <?php echo $peminjaman->nama_kendaraan ?></td>
 								<td><?php echo $peminjaman->tanggal_request ?></td>
 								<td><?php echo $peminjaman->estimasi_pengembalian ?></td>
 								<td><?php echo $peminjaman->tujuan ?></td>

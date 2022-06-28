@@ -156,12 +156,7 @@
 								</tr>
 							</div>
 						<?php } ?>
-						<tr>
-							<td></td>
-							<td><input type="hidden" name="pemeliharaan_id" value="<?php echo $pemeliharaan_id; ?>" />
-								<a href="<?php echo site_url('pemeliharaan') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
-							</td>
-						</tr>
+
 					</table>
 				</form>
 			</div>

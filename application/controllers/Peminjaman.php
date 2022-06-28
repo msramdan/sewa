@@ -92,12 +92,10 @@ class Peminjaman extends CI_Controller
 
 	public function create_pengembalian()
 	{
-		$kode = $this->Peminjaman_model->generatekodeReq();
-
 		$data = array(
 			'button' => 'Create',
-			'kendaraan' => $this->Kendaraan_model->get_all_available(),
-			'action' => site_url('peminjaman/create_action'),
+			'peminjaman' => $this->Peminjaman_model->get_all_pengembalian_form(),
+			'action' => site_url('peminjaman/update_action_pengembalian'),
 			'peminjaman_id' => set_value('peminjaman_id'),
 			'no_peminjaman' => set_value('no_peminjaman'),
 			'karyawan_id' => set_value('karyawan_id'),
@@ -111,10 +109,32 @@ class Peminjaman extends CI_Controller
 			'tanggal_pengembalian' => set_value('tanggal_pengembalian'),
 			'photo' => set_value('photo'),
 			'status_pengembalian' => set_value('status_pengembalian'),
-			'kode' => $kode,
 		);
-		$this->template->load('template', 'peminjaman/peminjaman_form', $data);
+		$this->template->load('template', 'peminjaman/pengembalian_form', $data);
 	}
+
+	public function update_action_pengembalian()
+	{
+		$config['upload_path']      = './assets/dist/img/photo';
+		$config['allowed_types']    = 'jpg|png|jpeg';
+		$config['max_size']         = 10048;
+		$config['file_name']        = 'File-' . date('ymd') . '-' . substr(sha1(rand()), 0, 10);
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+		$this->upload->do_upload("photo");
+		$data = $this->upload->data();
+		$photo = $data['file_name'];
+		$data = array(
+			'tanggal_pengembalian' => $this->input->post('tanggal_pengembalian', TRUE),
+			'photo' => $photo,
+			'status_pengembalian' => 'Waiting'
+		);
+		$this->Peminjaman_model->update($this->input->post('peminjaman_id'), $data);
+
+		$this->session->set_flashdata('message', 'Create Pengembalian berhasil');
+		redirect(site_url('peminjaman/kembali'));
+	}
+
 
 	public function create_action()
 	{
@@ -210,6 +230,32 @@ class Peminjaman extends CI_Controller
 		}
 	}
 
+	public function delete_pengembalian($id)
+	{
+
+		$row = $this->Peminjaman_model->get_by_id(decrypt_url($id));
+
+		if ($row) {
+			if ($row->photo == null || $row->photo == '') {
+			} else {
+				$target_file = './assets/dist/img/photo/' . $row->photo;
+				unlink($target_file);
+			}
+
+			$data = array(
+				'tanggal_pengembalian' => null,
+				'photo' => null,
+				'status_pengembalian' => null
+			);
+			$this->Peminjaman_model->update(decrypt_url($id), $data);
+			$this->session->set_flashdata('message', 'Delete Pengembalian berhasil');
+			redirect(site_url('peminjaman/kembali'));
+		} else {
+			$this->session->set_flashdata('message', 'Record Not Found');
+			redirect(site_url('peminjaman'));
+		}
+	}
+
 	public function _rules()
 	{
 		$this->form_validation->set_rules('no_peminjaman', 'no peminjaman', 'trim|required');
@@ -240,12 +286,12 @@ class Peminjaman extends CI_Controller
         WHERE peminjaman_id='$id'");
 
 		// update status kendaraan not availabe
-		if($statusPeminjaman){
+		if ($statusPeminjaman) {
 			$this->db->query("UPDATE kendaraan
 			SET status='Not available'
 			WHERE kendaraan_id ='$data->kendaraan_id'");
-		} 
-		
+		}
+
 		$this->session->set_flashdata('message', 'peminjaman Berhasil di Approved');
 		redirect(site_url('peminjaman'));
 	}
@@ -259,5 +305,38 @@ class Peminjaman extends CI_Controller
         WHERE peminjaman_id='$id'");
 		$this->session->set_flashdata('message', 'peminjaman di Reject');
 		redirect(site_url('peminjaman'));
+	}
+
+	public function approved_pengembalian($id)
+	{
+		$data = $this->db->query("SELECT * from peminjaman where peminjaman_id='$id'")->row();
+
+		$statusPeminjaman = $this->db->query("UPDATE peminjaman
+        SET status_pengembalian='Approved'
+        WHERE peminjaman_id='$id'");
+
+		// update status kendaraan not availabe
+		if ($statusPeminjaman) {
+			$this->db->query("UPDATE kendaraan
+			SET status='available'
+			WHERE kendaraan_id ='$data->kendaraan_id'");
+		}
+
+		$this->session->set_flashdata('message', 'Pengembalian Berhasil di Approved');
+		redirect(site_url('peminjaman/kembali'));
+	}
+
+	public function reject_pengembalian($id)
+	{
+		$this->db->query("UPDATE peminjaman
+        SET status_pengembalian='Reject'
+        WHERE peminjaman_id='$id'");
+		$this->session->set_flashdata('message', 'Pengembalian di Reject');
+		redirect(site_url('peminjaman/kembali'));
+	}
+
+	public function download($gambar)
+	{
+		force_download('assets/dist/img/photo/' . $gambar, NULL);
 	}
 }

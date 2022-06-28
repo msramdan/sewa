@@ -27,7 +27,11 @@ class Auth extends CI_Controller
 					'level_id' => $row->level_id
 				);
 				$this->session->set_userdata($params);
-				echo "<script>window.location='" . site_url('dashboard') . "'</script>";
+				if ($this->session->userdata('level_id') == 1) {
+					echo "<script>window.location='" . site_url('dashboard') . "'</script>";
+				} else {
+					echo "<script>window.location='" . site_url('peminjaman') . "'</script>";
+				}
 			}
 		} else {
 			$this->session->set_flashdata('gagal', 'Login gagal, username atau password salah');
