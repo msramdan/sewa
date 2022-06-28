@@ -19,6 +19,19 @@
 		<div class="card">
 
 			<div class="card-body" style="overflow-x: scroll;">
+
+			<!-- begin add report button  -->
+				<div class="btn-group">
+					<button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<i class="icon fas fa-file"></i> &nbsp; Laporan
+					</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="<?= base_url( "/peminjaman/export/pdf") ?>" target="_blank"><i class="icon fas fa-file-pdf"></i> &nbsp; Pdf</a>
+						<a class="dropdown-item" href="<?= base_url( "/peminjaman/export/xls") ?>" target="_blank"><i class="icon fas fa-file-excel"></i> &nbsp; Excel</a>
+					</div>
+				</div>
+			<!-- end add report button -->
+
 				<?php if ($this->session->userdata('level_id') == 2) { ?>
 					<div style="padding-bottom: 10px;">
 						<?php echo anchor(site_url('peminjaman/create'), '<i class="fas fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm tambah_data"'); ?>
