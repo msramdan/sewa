@@ -1,4 +1,10 @@
 <?php
+//Memanggil file autoload
+require 'vendor/autoload.php';
+
+//Memanggil class dari PhpSpreadsheet dengan namespace
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
@@ -260,6 +266,85 @@ class Pemeliharaan extends CI_Controller
 	public function download($gambar)
 	{
 		force_download('assets/dist/img/photo/' . $gambar, NULL);
+	}
+
+		
+	public function export( $type ){
+		$data = $this->Pemeliharaan_model->get_all();
+		
+
+		if( $type === "pdf" ){ 
+			return  $this->load->view( "report/pemeliharaan_pdf", [ "data" => $data  ] );
+		};
+		
+		return $this->generateExcel( $data );
+	}
+
+	private function generateExcel( $data ){
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		
+		// create variable to handle layout row & column
+		$style_row = $this->layoutexcel::get_style_row();
+		$style_col = $this->layoutexcel::get_style_col();
+
+
+		$sheet->setCellValue('A1', "DATA PEMELIHARAAN"); // Set column A1
+		$sheet->mergeCells('A1:P2'); // Set Merge Cell A1 to P2
+		$sheet->getStyle('A1:P1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+		$sheet->getStyle('A1')->getFont()->setBold(true)->setSize(14); // Set bold column A1
+
+		$from_cell = 'A';
+		$to_cell   = 'P';
+		$label_row = 3;
+		$labels    = ["No","Jenis Pemeliharaan","Kendaraan","Kategori Kilometer","KM Terakhir", "Dinamo Starter","Ket1", "Service Ecu","Ket2","Karbu","Ket3","Oli Mesin","Ket 4","Oli Power Steering","Ket5","Deskripsi"];
+
+		$width_column = [5,20,20,30,5,20,30,5,30,5,30,10,30,20,30,40];
+
+		//create header  use looping every column  Anf apply style header
+		foreach(range( $from_cell,$to_cell) as $key=>$val) 
+		{ 
+			$sheet->setCellValue($val.$label_row, $labels[$key]);
+			$sheet->getStyle($val.$label_row)->applyFromArray($style_col);
+		}  
+
+		$no = 1; //starter 1
+		$numrow = 4; // Set first row to fill table adalah use four num at rows
+
+		foreach($data as $p){ 
+			$value_data = [$no, $p->jenis_pemeliharaan, $p->nama_kendaraan, $p->kategori_kilometer, $p->km_terakhir, $p->dinamo_starter, $p->ket1,$p->service_ecu, $p->ket2, $p->karburator, $p->ket3,  $p->oli_mesin, $p->ket4, $p->oli_power_steering, $p->ket5,$p->deksripsi ]; 
+
+			//Push and manage Coloumn
+			foreach(range( $from_cell,$to_cell) as $key=>$val) 
+			{ 
+			
+				$sheet->setCellValue( $val.$numrow, $value_data[ $key ] );
+				$sheet->getStyle( $val.$numrow )->applyFromArray($style_row);
+			}  
+		  
+		  $no++; // increase every looping
+		  $numrow++; // increase every looping
+		}
+
+		foreach(range( $from_cell,$to_cell) as $key=>$val) 
+			{ 
+				$sheet->getColumnDimension( $val )->setWidth( $width_column[ $key ] );
+			}  
+		
+		$sheet->getDefaultRowDimension()->setRowHeight(-1);
+
+		$sheet->getPageSetup()->setOrientation
+		(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+
+		// Set judul file excel nya
+		$sheet->setTitle("Laporan Data Pemeliharaan");
+		// Proses file excel
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="Data Pemeliharaan.xlsx"'); // Set nama file excel nya
+		header('Cache-Control: max-age=0');
+		$writer = new Xlsx($spreadsheet);
+		$writer->save('php://output');
+	  
 	}
 }
 
