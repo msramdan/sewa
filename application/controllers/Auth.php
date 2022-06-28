@@ -17,6 +17,7 @@ class Auth extends CI_Controller
 	}
 	public function process()
 	{
+		
 		$post = $this->input->post(null, TRUE);
 		if (isset($post['login'])) {
 			$query = $this->user_model->login($post);

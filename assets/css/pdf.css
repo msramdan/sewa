@@ -1,0 +1,40 @@
+h1{
+  width : 100%;
+  text-align: center;
+}
+
+table{
+  border : 1px solid #000;
+  width:100% !important;
+  /* padding : 10px; */
+}
+
+thead tr{
+  background-color: #17a2b8 !important;
+  margin-bottom:20px !important;
+  padding-bottom : 20px !important;
+}
+
+/* thead tr td{
+  font-size:10px;
+} */
+tbody tr td{
+  padding-top:4px !important;
+  padding-bottom:4px !important;
+  font-size:12px;
+}
+
+thead tr th{ 
+  border-bottom : 2px solid #000;
+  margin-bottom: 20px;
+  font-size : 12px;
+  align:center;
+  padding-top:4px !important;
+  padding-bottom:4px !important;
+  color:#fff;
+}
+
+/* td{
+  border : 4px solid #000 !important;
+  margin : 10px !important;
+} */
