@@ -19,6 +19,7 @@ class Pemeliharaan extends CI_Controller
 		$this->load->model('Pemeliharaan_model');
 		$this->load->library('form_validation');
 		$this->load->model('Kendaraan_model');
+		$this->load->model('kategori_model');
 	}
 
 	public function index()
@@ -66,6 +67,7 @@ class Pemeliharaan extends CI_Controller
 
 	public function create()
 	{
+
 		$data = array(
 			'button' => 'Create',
 			'kendaraan' => $this->Kendaraan_model->get_all(),
@@ -75,19 +77,11 @@ class Pemeliharaan extends CI_Controller
 			'kendaraan_id' => set_value('kendaraan_id'),
 			'kategori_kilometer' => set_value('kategori_kilometer'),
 			'km_terakhir' => set_value('km_terakhir'),
-			'dinamo_starter' => set_value('dinamo_starter'),
-			'ket1' => set_value('ket1'),
-			'service_ecu' => set_value('service_ecu'),
-			'ket2' => set_value('ket2'),
-			'karburator' => set_value('karburator'),
-			'ket3' => set_value('ket3'),
-			'oli_mesin' => set_value('oli_mesin'),
-			'ket4' => set_value('ket4'),
-			'oli_power_steering' => set_value('oli_power_steering'),
-			'ket5' => set_value('ket5'),
 			'deksripsi' => set_value('deksripsi'),
 			'photo' => set_value('photo'),
+			"kategori" =>  $this->kategori_model->get_all(),
 		);
+
 		$this->template->load('template', 'pemeliharaan/pemeliharaan_form', $data);
 	}
 

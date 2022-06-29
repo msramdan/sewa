@@ -162,6 +162,34 @@
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/dist/js/sweetalert.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> <!-- untuk sweet alret -->
 	<script src="<?php echo base_url(); ?>assets/dist/js/dataflash.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			let row = 1;
+			
+			function addDynamicKategori()
+			{	
+				console.log('di tambah');
+
+				let categories = window.data.categories;
+				let row_option = "";
+
+				categories.forEach( item => {
+					row_option += "<option selected value="+ item.kategori_id+">"+ item.nama_kategori +"</option>";
+				});
+
+				let template   = "<tr><td><select class='form-select' aria-label='.form-select'> <option selected value=''>--Pilih--</option>" + row_option + "</select></td><td><textarea class='form-control' rows='3' name='keterangan' id='keterangan' placeholder='Deksripsi' resizable></textarea></td><td><button type='button' class='btn btn-sm btn-danger'><i class='icon fas fa-trash'></i></td></tr>";
+
+
+				$("#dynamic-kategori-field").append( template );
+
+				row++;
+			}
+
+			let cek = $("#pemeliharaan-dynamic-kategori").on('click', addDynamicKategori );
+		});
+	</script>
+
 	<script>
 		$(function() {
 			$('#data-table-default').DataTable({
