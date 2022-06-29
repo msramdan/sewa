@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 28 Jun 2022 pada 06.43
+-- Waktu pembuatan: 28 Jun 2022 pada 09.49
 -- Versi server: 5.7.33
 -- Versi PHP: 7.4.19
 
@@ -47,7 +47,7 @@ CREATE TABLE `kendaraan` (
 
 INSERT INTO `kendaraan` (`kendaraan_id`, `nopol`, `nama_kendaraan`, `merk`, `warna`, `tahun`, `no_rangka`, `no_mesin`, `no_bpkb`, `tgl_berlaku_stnk`, `status`) VALUES
 (3, '12345', 'Sigra', 'Sed molestiae nisi a', 'In necessitatibus co', 1996, 'Sit nisi provident', 'Iusto voluptatem nul', 'Vero incididunt repe', '1990-10-14', 'available'),
-(4, '9090', 'Avanza', 'Reprehenderit quidem', 'Cupiditate asperiore', 3, 'Expedita laborum In', 'Voluptas irure sed p', 'Quo qui ex laudantiu', '2016-07-18', 'available'),
+(4, '9090', 'Avanza', 'Reprehenderit quidem', 'Cupiditate asperiore', 3, 'Expedita laborum In', 'Voluptas irure sed p', 'Quo qui ex laudantiu', '2016-07-18', 'Not available'),
 (6, '678', 'Civic', 'Et unde occaecat dol', 'Cumque dolorem verit', 3, 'Consectetur natus do', 'Ratione ad minim qui', 'Animi porro quas si', '2009-04-11', 'available');
 
 -- --------------------------------------------------------
@@ -134,7 +134,8 @@ CREATE TABLE `peminjaman` (
 --
 
 INSERT INTO `peminjaman` (`peminjaman_id`, `no_peminjaman`, `karyawan_id`, `kendaraan_id`, `tanggal_request`, `estimasi_pengembalian`, `tujuan`, `keperluan`, `tanggal_approved`, `status_request`, `tanggal_pengembalian`, `photo`, `status_pengembalian`) VALUES
-(20, 'REQ/2022/0001', 4, 6, '2022-06-28 14:44:17', '2022-06-28 12:44:00', 'XX', 'XXX', '2022-06-28 14:44:23', 'Approved', '2022-06-28 12:50:00', 'File-220628-bc0cfa0e1c.png', 'Approved');
+(20, 'REQ/2022/0001', 4, 6, '2022-06-28 14:44:17', '2022-06-28 12:44:00', 'XX', 'XXX', '2022-06-28 14:44:23', 'Approved', '2022-06-28 12:50:00', 'File-220628-bc0cfa0e1c.png', 'Approved'),
+(21, 'REQ/2022/0002', 4, 4, '2022-06-28 18:40:49', '1982-07-06 02:21:00', 'Qui et enim error at', 'Cumque facilis rerum', '2022-06-28 18:41:12', 'Approved', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -247,7 +248,7 @@ ALTER TABLE `pemeliharaan`
 -- AUTO_INCREMENT untuk tabel `peminjaman`
 --
 ALTER TABLE `peminjaman`
-  MODIFY `peminjaman_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `peminjaman_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `unit`
