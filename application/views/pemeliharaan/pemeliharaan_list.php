@@ -42,6 +42,7 @@
 						<tr>
 							<th>No</th>
 							<th>Jenis Pemeliharaan</th>
+							<th>Tanggal Pemeliharaan</th>
 							<th>Kendaraan</th>
 							<th>Kategori Kilometer</th>
 							<th>Km Terakhir</th>
@@ -56,6 +57,7 @@
 							<tr>
 								<td><?= $no++ ?></td>
 								<td><?php echo $pemeliharaan->jenis_pemeliharaan ?></td>
+								<td><?php echo $pemeliharaan->tgl_pemeliharaan ?></td>
 								<td><?php echo $pemeliharaan->nama_kendaraan ?></td>
 								<td><?php echo $pemeliharaan->kategori_kilometer ?></td>
 								<td><?php echo $pemeliharaan->km_terakhir ?></td>
