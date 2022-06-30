@@ -105,13 +105,44 @@
 						<tr>
 							<td>Detail Item Service</td>
 							<td>
-								<button class="btn btn-primary btn-sm" id="pemeliharaan-dynamic-kategori"> Add</button> <br> <br>
+								<button type="button" class="btn btn-primary btn-sm" id="add-pemeliharaan-dynamic-kategori" ><i class="icon fas fa-plus "></i></button> <br> <br>
 								<table class="table table-bordered" id="dynamic-kategori-field">
 									<tr>
 										<td>Kategori</td>
 										<td>Keterangan</td>
 										<td>Aksi</td>
 									</tr>
+									<?php if ($this->uri->segment(2) != "create" || $this->uri->segment(2) != "create_action" && isset( $pemeliharaan_detail )): ?>
+										
+									<?php foreach ($pemeliharaan_detail as $key => $value) { ?>
+										<tr >
+											<td id="10<?= $value->kategori_id?>">
+												<input name="url" type="hidden" value="<?= encrypt_url( $value->pemeliharaan_detail_id ) ?>">  
+												<input name="update_detail_id[]" type="hidden" value="<?= $value->pemeliharaan_detail_id ?>">  
+												<select  name="update_kategori_id[]" class='form-control' aria-label='form-select'
+													style='width:100% !important' value="<?= $value->kategori_id?>" >
+											
+												<?php foreach( $kategori as $k=> $v ): ?>
+													
+													<!-- <option value="<?= $v->kategori_id ?>"> <?= $v->nama_kategori ?> </option> -->
+													   <option value="<?= $v->kategori_id ?>" <?php echo ( $v->kategori_id === $value->kategori_id ) ? "selected" : "" ?> > <?= $v->nama_kategori  ?></option>
+												<?php endforeach ?>
+
+
+												</select>
+											</td>
+											<td>
+												<textarea class='form-control height-auto' name='update_keterangan[]'  placeholder='Keterangan'>
+													<?= $value->keterangan ?>
+												</textarea>
+											</td>
+											<td>
+											<!-- <button type='button' class='btn btn-sm btn-danger btn-remove-category' id="10<?= $value->kategori_id?>" ><i class='icon fas fa-trash'></i></button> -->
+											<?php echo anchor(site_url('pemeliharaan/delete_pemeliharaan_detail/' . encrypt_url($value->pemeliharaan_detail_id)), '<i class="fas fa-trash-alt" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); ?>
+											</td>
+										</tr>
+									<?php }  ?>
+									<?php endif;  ?>
 								</table>
 							</td>
 						</tr>
@@ -143,10 +174,11 @@
 	}
 
 	domReady(() => {
-		let categories = <?= json_encode($kategori)  ?>
-
+		let categories = <?= json_encode($kategori);  ?>
+        
+	
 		window.data = {
-			categories : categories
+			categories : categories,
 		};
 	});
 </script>
