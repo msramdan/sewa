@@ -45,16 +45,6 @@
 							<th>Kendaraan</th>
 							<th>Kategori Kilometer</th>
 							<th>Km Terakhir</th>
-							<th>Dinamo Starter</th>
-							<th>Ket1</th>
-							<th>Service Ecu</th>
-							<th>Ket2</th>
-							<th>Karburator</th>
-							<th>Ket3</th>
-							<th>Oli Mesin</th>
-							<th>Ket4</th>
-							<th>Oli Power Steering</th>
-							<th>Ket5</th>
 							<th>Deksripsi</th>
 							<th>File Pendukung</th>
 							<th>Action</th>
@@ -69,16 +59,6 @@
 								<td><?php echo $pemeliharaan->nama_kendaraan ?></td>
 								<td><?php echo $pemeliharaan->kategori_kilometer ?></td>
 								<td><?php echo $pemeliharaan->km_terakhir ?></td>
-								<td><?php echo $pemeliharaan->dinamo_starter ?></td>
-								<td><?php echo $pemeliharaan->ket1 ?></td>
-								<td><?php echo $pemeliharaan->service_ecu ?></td>
-								<td><?php echo $pemeliharaan->ket2 ?></td>
-								<td><?php echo $pemeliharaan->karburator ?></td>
-								<td><?php echo $pemeliharaan->ket3 ?></td>
-								<td><?php echo $pemeliharaan->oli_mesin ?></td>
-								<td><?php echo $pemeliharaan->ket4 ?></td>
-								<td><?php echo $pemeliharaan->oli_power_steering ?></td>
-								<td><?php echo $pemeliharaan->ket5 ?></td>
 								<td><?php echo $pemeliharaan->deksripsi ?></td>
 								<td>
 									<?php if ($pemeliharaan->photo == null) { ?>
