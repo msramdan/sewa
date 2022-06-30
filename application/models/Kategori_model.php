@@ -8,7 +8,7 @@ class Kategori_model extends CI_Model
 
     public $table = 'kategori';
     public $id    = 'kategori_id';
-    public $order = 'ASC';
+    public $order = 'DESC';
 
     function __construct()
     {
@@ -18,7 +18,8 @@ class Kategori_model extends CI_Model
     // get all
     function get_all()
     {
-        $this->db->order_by("nama_kategori", $this->order);
+        $this->db->order_by($this->id, $this->order);
+        // $this->db->group_by("main_kategori");
         return $this->db->get($this->table)->result();
     }
 
