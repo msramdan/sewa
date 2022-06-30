@@ -1,3 +1,4 @@
+
 <div class="content-wrapper">
 	<section class="content-header">
 		<div class="container-fluid">
@@ -40,7 +41,12 @@
 										Insidental
 									</label>
 								</div>
+								
 							</td>
+						</tr>
+						<tr>
+							<td>Tgl Pemeliharaan <?php echo form_error('tgl_pemeliharaan') ?></td>
+							<td><input type="date" class="form-control" name="tgl_pemeliharaan" id="tgl_pemeliharaan" placeholder="Tgl Pemeliharaan" value="<?php echo $tgl_pemeliharaan; ?>" /></td>
 						</tr>
 						<tr>
 							<td>kendaraan <?php echo form_error('kendaraan_id') ?></td>
@@ -112,9 +118,15 @@
 										<td>Keterangan</td>
 										<td>Aksi</td>
 									</tr>
-									<?php if ($this->uri->segment(2) != "create" || $this->uri->segment(2) != "create_action" && isset( $pemeliharaan_detail )): ?>
+									<?php 
+									if ($this->uri->segment(2) !== "create" || $this->uri->segment(2) !== "create_action" && isset( $pemeliharaan_detail )):  
+										$pemeliharaan_detail = $pemeliharaan_detail ?? [];
+										$row_option = "";
+        								$name_group = "";
+									?>
 										
 									<?php foreach ($pemeliharaan_detail as $key => $value) { ?>
+										
 										<tr >
 											<td id="10<?= $value->kategori_id?>">
 												<input name="url" type="hidden" value="<?= encrypt_url( $value->pemeliharaan_detail_id ) ?>">  
@@ -122,11 +134,31 @@
 												<select  name="update_kategori_id[]" class='form-control' aria-label='form-select'
 													style='width:100% !important' value="<?= $value->kategori_id?>" >
 											
-												<?php foreach( $kategori as $k=> $v ): ?>
-													
-													<!-- <option value="<?= $v->kategori_id ?>"> <?= $v->nama_kategori ?> </option> -->
-													   <option value="<?= $v->kategori_id ?>" <?php echo ( $v->kategori_id === $value->kategori_id ) ? "selected" : "" ?> > <?= $v->nama_kategori  ?></option>
-												<?php endforeach ?>
+												<?php foreach( $kategori as $k=> $v ): 	
+													if( $name_group !== $v->main_kategori ){
+														if( $key > 0 ) {
+												?>
+															</optgroup>
+													<?php } ?>
+
+													<optgroup label="<?=$v->main_kategori?>">
+												<?php }?>
+
+
+													<option value="<?= $v->kategori_id ?>" <?php echo ( $v->kategori_id === $value->kategori_id ) ? "selected" : "" ?> > <?= $v->nama_kategori  ?></option>
+
+												<?php
+													  if ( $name_group !== $v->main_kategori) {
+														$name_group = $v->main_kategori;
+													  }
+												
+													  if ( $key === ( count( $kategori ) - 1)) {
+												?>
+													</optgroup>
+												<?php
+													  }
+													endforeach 
+												?>
 
 
 												</select>
