@@ -1,4 +1,3 @@
-console.log("ready");
 $(document).ready(function () {
   let row = 1;
 
