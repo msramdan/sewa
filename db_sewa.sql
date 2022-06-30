@@ -21,60 +21,61 @@ USE `db_sewa`;
 CREATE TABLE IF NOT EXISTS `kategori` (
   `kategori_id` int(11) NOT NULL AUTO_INCREMENT,
   `nama_kategori` varchar(250) NOT NULL,
+  `main_kategori` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`kategori_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table db_sewa.kategori: ~47 rows (approximately)
 DELETE FROM `kategori`;
 /*!40000 ALTER TABLE `kategori` DISABLE KEYS */;
-INSERT INTO `kategori` (`kategori_id`, `nama_kategori`) VALUES
-	(1, 'MESIN MOBIL'),
-	(2, 'INJEKSI MOBIL'),
-	(3, 'OLI MESIN'),
-	(4, 'OLI MESIN'),
-	(5, 'GANTI FILTER OLI'),
-	(6, 'AIR RADIATOR'),
-	(7, 'RADIATOR MOBIL'),
-	(8, 'DINAMO STARTER'),
-	(9, 'PENGGANTIAN BUSI'),
-	(10, 'PENGECEKAN IDLE MESIN'),
-	(11, 'PEMBERSIHAN FILTER UDARA'),
-	(12, 'PEMBERSIAN THROTTLE BODY'),
-	(13, 'MINYAK REM'),
-	(14, 'OLI REM'),
-	(15, 'SUSPENSI'),
-	(16, 'BALANCING'),
-	(17, 'SPOORING'),
-	(18, 'VELG MOBIL'),
-	(19, 'GARDAN'),
-	(20, 'SHOCKBREAKER'),
-	(21, 'POWER SREERING'),
-	(22, 'SISTEM KEMUDI'),
-	(23, 'TEKANAN ANGIN'),
-	(24, 'PENGECEKAN REM RODA'),
-	(25, 'PENGECEKAN BAUT RODA'),
-	(26, 'GANTI KAMPAS REM'),
-	(27, 'ALARM MOBIL'),
-	(28, 'AUDIO MOBIL'),
-	(29, 'LAMPU MOBIL'),
-	(30, 'AIRBAG'),
-	(31, 'KLAKSON'),
-	(32, 'ECU MOBIL'),
-	(33, 'ALTERNATOR'),
-	(34, 'POWER WINDOW'),
-	(35, 'CENTRAL LOCK'),
-	(36, 'SPEEDMETER'),
-	(37, 'AKI MOBIL'),
-	(38, 'REMOT MOBIL'),
-	(39, 'INSTRUMEN INDIKATOR'),
-	(40, 'PENGGANTIAN FILTER AC'),
-	(41, 'OLI TRANSMISI'),
-	(42, 'KOPLING'),
-	(43, 'KACA MOBIL'),
-	(44, 'BUMPER'),
-	(45, 'KNALPOT'),
-	(46, 'JOK'),
-	(47, 'SABUK PENGAMAN');
+INSERT INTO `kategori` (`kategori_id`, `nama_kategori`, `main_kategori`) VALUES
+	(1, 'MESIN MOBIL', 'SERVICE MESIN'),
+	(2, 'INJEKSI MOBIL', 'SERVICE MESIN'),
+	(3, 'OLI MESIN', 'SERVICE MESIN'),
+	(4, 'OLI MESIN', 'SERVICE MESIN'),
+	(5, 'GANTI FILTER OLI', 'SERVICE MESIN'),
+	(6, 'AIR RADIATOR', 'SERVICE MESIN'),
+	(7, 'RADIATOR MOBIL', 'SERVICE MESIN'),
+	(8, 'DINAMO STARTER', 'SERVICE MESIN'),
+	(9, 'PENGGANTIAN BUSI', 'SERVICE MESIN'),
+	(10, 'PENGECEKAN IDLE MESIN', 'SERVICE MESIN'),
+	(11, 'PEMBERSIHAN FILTER UDARA', 'SERVICE MESIN'),
+	(12, 'PEMBERSIAN THROTTLE BODY', 'SERVICE MESIN'),
+	(13, 'MINYAK REM', 'SERVICE PENGEREMAN'),
+	(14, 'OLI REM', 'SERVICE PENGEREMAN'),
+	(15, 'SUSPENSI', 'SERVICE RODA'),
+	(16, 'BALANCING', 'SERVICE RODA'),
+	(17, 'SPOORING', 'SERVICE RODA'),
+	(18, 'VELG MOBIL', 'SERVICE RODA'),
+	(19, 'GARDAN', 'SERVICE RODA'),
+	(20, 'SHOCKBREAKER', 'SERVICE RODA'),
+	(21, 'POWER SREERING', 'SERVICE RODA'),
+	(22, 'SISTEM KEMUDI', 'SERVICE RODA'),
+	(23, 'TEKANAN ANGIN', 'SERVICE RODA'),
+	(24, 'PENGECEKAN REM RODA', 'SERVICE RODA'),
+	(25, 'PENGECEKAN BAUT RODA', 'SERVICE RODA'),
+	(26, 'GANTI KAMPAS REM', 'SERVICE RODA'),
+	(27, 'ALARM MOBIL', 'SERVICE ELEKTRIKAL'),
+	(28, 'AUDIO MOBIL', 'SERVICE ELEKTRIKAL'),
+	(29, 'LAMPU MOBIL', 'SERVICE ELEKTRIKAL'),
+	(30, 'AIRBAG', 'SERVICE ELEKTRIKAL'),
+	(31, 'KLAKSON', 'SERVICE ELEKTRIKAL'),
+	(32, 'ECU MOBIL', 'SERVICE ELEKTRIKAL'),
+	(33, 'ALTERNATOR', 'SERVICE ELEKTRIKAL'),
+	(34, 'POWER WINDOW', 'SERVICE ELEKTRIKAL'),
+	(35, 'CENTRAL LOCK', 'SERVICE ELEKTRIKAL'),
+	(36, 'SPEEDMETER', 'SERVICE ELEKTRIKAL'),
+	(37, 'AKI MOBIL', 'SERVICE ELEKTRIKAL'),
+	(38, 'REMOT MOBIL', 'SERVICE ELEKTRIKAL'),
+	(39, 'INSTRUMEN INDIKATOR', 'SERVICE ELEKTRIKAL'),
+	(40, 'PENGGANTIAN FILTER AC', 'SERVICE ELEKTRIKAL'),
+	(41, 'OLI TRANSMISI', 'SERVICE TRANSMISI'),
+	(42, 'KOPLING', 'SERVICE TRANSMISI'),
+	(43, 'KACA MOBIL', 'SERVICA LAIN_LAIN'),
+	(44, 'BUMPER', 'SERVICA LAIN_LAIN'),
+	(45, 'KNALPOT', 'SERVICA LAIN_LAIN'),
+	(46, 'JOK', 'SERVICA LAIN_LAIN'),
+	(47, 'SABUK PENGAMAN', 'SERVICA LAIN_LAIN');
 /*!40000 ALTER TABLE `kategori` ENABLE KEYS */;
 
 -- Dumping structure for table db_sewa.kendaraan
@@ -130,19 +131,18 @@ CREATE TABLE IF NOT EXISTS `pemeliharaan` (
   `kategori_kilometer` varchar(100) NOT NULL,
   `km_terakhir` varchar(50) NOT NULL,
   `deksripsi` text DEFAULT NULL,
-  `tgl_pemeliharan` date NOT NULL,
   `photo` varchar(250) DEFAULT NULL,
+  `tgl_pemeliharaan` date DEFAULT NULL,
   PRIMARY KEY (`pemeliharaan_id`),
   KEY `kendaraan_id` (`kendaraan_id`),
   CONSTRAINT `pemeliharaan_ibfk_1` FOREIGN KEY (`kendaraan_id`) REFERENCES `kendaraan` (`kendaraan_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table db_sewa.pemeliharaan: ~0 rows (approximately)
 DELETE FROM `pemeliharaan`;
 /*!40000 ALTER TABLE `pemeliharaan` DISABLE KEYS */;
-INSERT INTO `pemeliharaan` (`pemeliharaan_id`, `jenis_pemeliharaan`, `kendaraan_id`, `kategori_kilometer`, `km_terakhir`, `deksripsi`, `tgl_pemeliharan`, `photo`) VALUES
-	(12, 'Berkala', 4, '10.000 - 20.000 km', '6888', 'gjgjgjgj', '0000-00-00', 'File-220629-7003e8fbcb.png'),
-	(13, 'Insidental', 6, '20.000 - 30.000 km', '20000', 'Cobaan', '0000-00-00', 'File-220629-b8d9029927.jpg');
+INSERT INTO `pemeliharaan` (`pemeliharaan_id`, `jenis_pemeliharaan`, `kendaraan_id`, `kategori_kilometer`, `km_terakhir`, `deksripsi`, `photo`, `tgl_pemeliharaan`) VALUES
+	(17, 'Insidental', 4, 'Lebih dari 50.000', '60', 'GJGJGJG', 'File-220630-b3bfa0e84e.png', '2022-06-30');
 /*!40000 ALTER TABLE `pemeliharaan` ENABLE KEYS */;
 
 -- Dumping structure for table db_sewa.pemeliharaan_detail
@@ -154,16 +154,14 @@ CREATE TABLE IF NOT EXISTS `pemeliharaan_detail` (
   PRIMARY KEY (`pemeliharaan_detail_id`),
   KEY `pemeliharaan_id` (`pemeliharaan_id`),
   CONSTRAINT `pemeliharaan_detail_ibfk_1` FOREIGN KEY (`pemeliharaan_id`) REFERENCES `pemeliharaan` (`pemeliharaan_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_sewa.pemeliharaan_detail: ~0 rows (approximately)
+-- Dumping data for table db_sewa.pemeliharaan_detail: ~2 rows (approximately)
 DELETE FROM `pemeliharaan_detail`;
 /*!40000 ALTER TABLE `pemeliharaan_detail` DISABLE KEYS */;
 INSERT INTO `pemeliharaan_detail` (`pemeliharaan_detail_id`, `pemeliharaan_id`, `kategori_id`, `keterangan`) VALUES
-	(3, 12, 38, 'ini remote mobil'),
-	(4, 12, 24, 'ini pengecekan rem roda'),
-	(5, 13, 1, 'ayu cek mesin mobil'),
-	(6, 13, 10, 'idle mesin ah');
+	(16, 17, 6, '             ini air radiator yah          '),
+	(17, 17, 33, '             ini alternator            ');
 /*!40000 ALTER TABLE `pemeliharaan_detail` ENABLE KEYS */;
 
 -- Dumping structure for table db_sewa.peminjaman
