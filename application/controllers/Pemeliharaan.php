@@ -43,6 +43,7 @@ class Pemeliharaan extends CI_Controller
 				'action' => site_url('pemeliharaan/update_action'),
 				'pemeliharaan_id' => set_value('pemeliharaan_id', $row->pemeliharaan_id),
 				'jenis_pemeliharaan' => set_value('jenis_pemeliharaan', $row->jenis_pemeliharaan),
+				'tgl_pemeliharaan' => set_value('tgl_pemeliharaan', $row->tgl_pemeliharaan),
 				'kendaraan_id' => set_value('kendaraan_id', $row->kendaraan_id),
 				'kategori_kilometer' => set_value('kategori_kilometer', $row->kategori_kilometer),
 				'km_terakhir' => set_value('km_terakhir', $row->km_terakhir),
@@ -67,6 +68,7 @@ class Pemeliharaan extends CI_Controller
 			'action' => site_url('pemeliharaan/create_action'),
 			'pemeliharaan_id' => set_value('pemeliharaan_id'),
 			'jenis_pemeliharaan' => set_value('jenis_pemeliharaan'),
+			'tgl_pemeliharaan' => set_value('tgl_pemeliharaan'),
 			'kendaraan_id' => set_value('kendaraan_id'),
 			'kategori_kilometer' => set_value('kategori_kilometer'),
 			'km_terakhir' => set_value('km_terakhir'),
@@ -97,8 +99,10 @@ class Pemeliharaan extends CI_Controller
 			$categories  = $this->input->post('kategori_id');
 			$keterangans = $this->input->post('keterangan');
 
+
 			$data = array(
 				'jenis_pemeliharaan' => $this->input->post('jenis_pemeliharaan', TRUE),
+				'tgl_pemeliharaan' => $this->input->post('tgl_pemeliharaan', TRUE),
 				'kendaraan_id' => $this->input->post('kendaraan_id', TRUE),
 				'kategori_kilometer' => $this->input->post('kategori_kilometer', TRUE),
 				'km_terakhir' => $this->input->post('km_terakhir', TRUE),
@@ -137,6 +141,7 @@ class Pemeliharaan extends CI_Controller
 				'action' => site_url('pemeliharaan/update_action'),
 				'pemeliharaan_id' => set_value('pemeliharaan_id', $row->pemeliharaan_id),
 				'jenis_pemeliharaan' => set_value('jenis_pemeliharaan', $row->jenis_pemeliharaan),
+				'tgl_pemeliharaan' => set_value('tgl_pemeliharaan', $row->tgl_pemeliharaan),
 				'kendaraan_id' => set_value('kendaraan_id', $row->kendaraan_id),
 				'kategori_kilometer' => set_value('kategori_kilometer', $row->kategori_kilometer),
 				'km_terakhir' => set_value('km_terakhir', $row->km_terakhir),
@@ -208,6 +213,7 @@ class Pemeliharaan extends CI_Controller
 
 			$data = array(
 				'jenis_pemeliharaan' => $this->input->post('jenis_pemeliharaan', TRUE),
+				'tgl_pemeliharaan' => $this->input->post('tgl_pemeliharaan', TRUE),
 				'kendaraan_id' => $this->input->post('kendaraan_id', TRUE),
 				'kategori_kilometer' => $this->input->post('kategori_kilometer', TRUE),
 				'km_terakhir' => $this->input->post('km_terakhir', TRUE),
@@ -297,18 +303,18 @@ class Pemeliharaan extends CI_Controller
 		$style_row = $this->layoutexcel::get_style_row();
 		$style_col = $this->layoutexcel::get_style_col();
 
-
-		$sheet->setCellValue('A1', "DATA PEMELIHARAAN"); // Set column A1
-		$sheet->mergeCells('A1:F2'); // Set Merge Cell A1 to P2
-		$sheet->getStyle('A1:F2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-		$sheet->getStyle('A1')->getFont()->setBold(true)->setSize(14); // Set bold column A1
-
 		$from_cell = 'A';
-		$to_cell   = 'F';
-		$label_row = 3;
-		$labels    = ["No","Jenis Pemeliharaan","Kendaraan","Kategori Kilometer","KM Terakhir","Deskripsi"];
+		$to_cell   = 'G';
 
-		$width_column = [5,20,20,30,20,40];
+		$sheet->setCellValue($from_cell.'1', "DATA PEMELIHARAAN"); // Set column A1
+		$sheet->mergeCells($from_cell.'1:'. $to_cell .'2'); // Set Merge Cell A1 to P2
+		$sheet->getStyle($from_cell.'1:'.$to_cell.'2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+		$sheet->getStyle($from_cell.'1')->getFont()->setBold(true)->setSize(14); // Set bold column A1
+
+		$label_row = 3;
+		$labels    = ["No","Jenis Pemeliharaan","Tanggal Pemeliharaan","Kendaraan","Kategori Kilometer","KM Terakhir","Deskripsi"];
+
+		$width_column = [5,20,20,20,30,20,40];
 
 		//create header  use looping every column  Anf apply style header
 		foreach(range( $from_cell,$to_cell) as $key=>$val) 
@@ -321,7 +327,7 @@ class Pemeliharaan extends CI_Controller
 		$numrow = 4; // Set first row to fill table adalah use four num at rows
 
 		foreach($data as $p){ 
-			$value_data = [$no, $p->jenis_pemeliharaan, $p->nama_kendaraan, $p->kategori_kilometer, $p->km_terakhir,$p->deksripsi ]; 
+			$value_data = [$no, $p->jenis_pemeliharaan, $p->tgl_pemeliharaan ,$p->nama_kendaraan, $p->kategori_kilometer, $p->km_terakhir,$p->deksripsi ]; 
 
 			//Push and manage Coloumn
 			foreach(range( $from_cell,$to_cell) as $key=>$val) 
