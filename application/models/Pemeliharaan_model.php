@@ -39,16 +39,6 @@ class Pemeliharaan_model extends CI_Model
 		$this->db->or_like('kendaraan_id', $q);
 		$this->db->or_like('kategori_kilometer', $q);
 		$this->db->or_like('km_terakhir', $q);
-		$this->db->or_like('dinamo_starter', $q);
-		$this->db->or_like('ket1', $q);
-		$this->db->or_like('service_ecu', $q);
-		$this->db->or_like('ket2', $q);
-		$this->db->or_like('karburator', $q);
-		$this->db->or_like('ket3', $q);
-		$this->db->or_like('oli_mesin', $q);
-		$this->db->or_like('ket4', $q);
-		$this->db->or_like('oli_power_steering', $q);
-		$this->db->or_like('ket5', $q);
 		$this->db->or_like('deksripsi', $q);
 		$this->db->or_like('photo', $q);
 		$this->db->from($this->table);
@@ -60,6 +50,7 @@ class Pemeliharaan_model extends CI_Model
 	function insert($data)
 	{
 		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
 	}
 
 	// update data
