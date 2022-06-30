@@ -74,7 +74,7 @@
 							<td>Km Terakhir <?php echo form_error('km_terakhir') ?></td>
 							<td><input type="text" class="form-control" name="km_terakhir" id="km_terakhir" placeholder="Km Terakhir" value="<?php echo $km_terakhir; ?>" /></td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td colspan="2"> <b>Service Mesin</b> </td>
 						</tr>
 
@@ -132,6 +132,42 @@
 						<tr>
 							<td>Deksripsi <?php echo form_error('deksripsi') ?></td>
 							<td> <textarea class="form-control" rows="3" name="deksripsi" id="deksripsi" placeholder="Deksripsi"><?php echo $deksripsi; ?></textarea></td>
+						</tr> -->
+						<tr>
+							<td>Detail Item Service</td>
+							<td>
+								<!-- <button type="button" class="btn btn-primary btn-sm pemeliharaan-dynamic-kategori" ><i class="icon fas fa-plus "></i></button> <br> <br> -->
+								<table class="table table-bordered">
+									<tr>
+										<td>Kategori</td>
+										<td>Keterangan</td>
+									</tr>
+									
+									<?php foreach ($pemeliharaan_detail as $key => $value) { ?>
+										<tr>
+											<td>
+												<select  class='form-control' aria-label='form-select'
+													style='width:100% !important' value="<?= $value->kategori_id?>" disabled>
+											
+												<?php foreach( $kategori as $k=> $v ): 
+													if( $v->kategori_id !== $value->kategori_id ) continue;	
+												?>
+													
+													<option value="<?= $v->kategori_id ?>"> <?= $v->nama_kategori ?> </option>
+												<?php endforeach ?>
+
+
+												</select>
+											</td>
+											<td>
+												<textarea class='form-control height-auto' name='keterangan[]'  placeholder='Keterangan' disabled>
+													<?= $value->keterangan ?>
+												</textarea>
+											</td>
+										</tr>
+									<?php } ?>
+								</table>
+							</td>
 						</tr>
 
 						<?php if ($this->uri->segment(2) == 'create' || $this->uri->segment(2) == 'create_action') { ?>
