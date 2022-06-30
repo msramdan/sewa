@@ -28,17 +28,17 @@ class Kendaraan extends CI_Controller
         $row = $this->Kendaraan_model->get_by_id(decrypt_url($id));
         if ($row) {
             $data = array(
-		'kendaraan_id' => $row->kendaraan_id,
-		'nopol' => $row->nopol,
-		'nama_kendaraan' => $row->nama_kendaraan,
-		'merk' => $row->merk,
-		'warna' => $row->warna,
-		'tahun' => $row->tahun,
-		'no_rangka' => $row->no_rangka,
-		'no_mesin' => $row->no_mesin,
-		'no_bpkb' => $row->no_bpkb,
-		'tgl_berlaku_stnk' => $row->tgl_berlaku_stnk,
-	    );
+			'kendaraan_id' => $row->kendaraan_id,
+			'nopol' => $row->nopol,
+			'nama_kendaraan' => $row->nama_kendaraan,
+			'merk' => $row->merk,
+			'warna' => $row->warna,
+			'tahun' => $row->tahun,
+			'no_rangka' => $row->no_rangka,
+			'no_mesin' => $row->no_mesin,
+			'no_bpkb' => $row->no_bpkb,
+			'tgl_berlaku_stnk' => $row->tgl_berlaku_stnk,
+			);
             $this->template->load('template','kendaraan/kendaraan_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -51,18 +51,18 @@ class Kendaraan extends CI_Controller
         $data = array(
             'button' => 'Create',
             'action' => site_url('kendaraan/create_action'),
-	    'kendaraan_id' => set_value('kendaraan_id'),
-	    'nopol' => set_value('nopol'),
-	    'nama_kendaraan' => set_value('nama_kendaraan'),
-	    'merk' => set_value('merk'),
-	    'warna' => set_value('warna'),
-	    'tahun' => set_value('tahun'),
-	    'no_rangka' => set_value('no_rangka'),
-	    'no_mesin' => set_value('no_mesin'),
-	    'no_bpkb' => set_value('no_bpkb'),
-	    'tgl_berlaku_stnk' => set_value('tgl_berlaku_stnk'),
-	);
-        $this->template->load('template','kendaraan/kendaraan_form', $data);
+			'kendaraan_id' => set_value('kendaraan_id'),
+			'nopol' => set_value('nopol'),
+			'nama_kendaraan' => set_value('nama_kendaraan'),
+			'merk' => set_value('merk'),
+			'warna' => set_value('warna'),
+			'tahun' => set_value('tahun'),
+			'no_rangka' => set_value('no_rangka'),
+			'no_mesin' => set_value('no_mesin'),
+			'no_bpkb' => set_value('no_bpkb'),
+			'tgl_berlaku_stnk' => set_value('tgl_berlaku_stnk'),
+		);
+		$this->template->load('template','kendaraan/kendaraan_form', $data);
     }
     
     public function create_action() 
