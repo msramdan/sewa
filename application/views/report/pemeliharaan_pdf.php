@@ -13,16 +13,6 @@
 		<td align='center'>". $pemeliharaan->nama_kendaraan ."</td>
 		<td align='right'>". $pemeliharaan->kategori_kilometer ."</td>
 		<td align='right'>". $pemeliharaan->km_terakhir ."</td>
-		<td align='right'>". $pemeliharaan->dinamo_starter ."</td>
-		<td align='center'>". $pemeliharaan->ket1 ."</td>
-		<td align='center'>". $pemeliharaan->service_ecu ."</td>
-		<td align='center'>". $pemeliharaan->ket2 ."</td>
-		<td align='center'>". $pemeliharaan->karburator ."</td>
-		<td align='center'>". $pemeliharaan->ket3 ."</td>
-		<td align='center'>". $pemeliharaan->oli_mesin ."</td>
-		<td align='center'>". $pemeliharaan->ket4 ."</td>
-		<td align='right'>". $pemeliharaan->oli_power_steering ."</td>
-		<td align='center'>". $pemeliharaan->ket5 ."</td>
 		<td align='center'>". $pemeliharaan->deksripsi ."</td>
 
 		</tr>";
@@ -42,16 +32,6 @@
 					<th>Kendaraan</th>
 					<th>Kategori Kilometer</th>
 					<th>Km Terakhir</th>
-					<th>Dinamo Starter</th>
-					<th>Ket1</th>
-					<th>Service Ecu</th>
-					<th>Ket2</th>
-					<th>Karbu</th>
-					<th>Ket3</th>
-					<th>Oli Mesin</th>
-					<th>Ket4</th>
-					<th>Oli Power Steering</th>
-					<th>Ket5</th>
 					<th>Deksripsi</th>
 					</tr>
 				</thead>
