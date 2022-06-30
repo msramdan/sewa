@@ -10,6 +10,7 @@
 		$tbody_child .= "<tr>
 		<td align='right'>". $no++ ."</td>
 		<td align='center'>". $pemeliharaan->jenis_pemeliharaan ."</td>
+		<td align='center'>". $pemeliharaan->tgl_pemeliharaan ."</td>
 		<td align='center'>". $pemeliharaan->nama_kendaraan ."</td>
 		<td align='right'>". $pemeliharaan->kategori_kilometer ."</td>
 		<td align='right'>". $pemeliharaan->km_terakhir ."</td>
@@ -29,6 +30,7 @@
 					<tr>
 					<th>No</th>
 					<th>Jenis Pemeliharaan</th>
+					<th>Tanggal Pemeliharaan</th>
 					<th>Kendaraan</th>
 					<th>Kategori Kilometer</th>
 					<th>Km Terakhir</th>

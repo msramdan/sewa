@@ -43,6 +43,10 @@
 							</td>
 						</tr>
 						<tr>
+							<td>Tgl Pemeliharaan <?php echo form_error('tgl_pemeliharaan') ?></td>
+							<td><input type="date" class="form-control" name="tgl_pemeliharaan" id="tgl_pemeliharaan" placeholder="Tgl Pemeliharaan" value="<?php echo $tgl_pemeliharaan; ?>" disabled/></td>
+						</tr>
+						<tr>
 							<td>kendaraan <?php echo form_error('kendaraan_id') ?></td>
 							<td>
 								<select name="kendaraan_id" class="form-control theSelect">
@@ -61,11 +65,11 @@
 							<td>Kategori Kilometer <?php echo form_error('kategori_kilometer') ?></td>
 							<td><select name="kategori_kilometer" class="form-control theSelect" value="<?= $kategori_kilometer ?>">
 									<option value="">-- Pilih --</option>
-									<option value="5.000 - 10.000 km" <?php echo $kategori_kilometer == '5.000 - 10.000 km' ? 'selected' : 'null' ?>>5.000 - 10.000 km</option>
-									<option value="10.000 - 20.000 km" <?php echo $kategori_kilometer == '10.000 - 20.000 km' ? 'selected' : 'null' ?>>10.000 - 20.000 km</option>
-									<option value="20.000 - 30.000 km" <?php echo $kategori_kilometer == '20.000 - 30.000 km' ? 'selected' : 'null' ?>>20.000 - 30.000 km</option>
-									<option value="30.000 - 50.000 km" <?php echo $kategori_kilometer == '30.000 - 50.000 km' ? 'selected' : 'null' ?>>30.000 - 50.000 km</option>
-									<option value=" 50.000 > keatas km" <?php echo $kategori_kilometer == ' 50.000 > keatas km' ? 'selected' : 'null' ?>> 50.000 > keatas km</option>
+									<option value="5.000 - 10.000 km" <?php echo $kategori_kilometer == '5.000 - 10.000 km' ? 'selected' : 'null' ?> > 5.000 - 10.000 km</option>
+									<option value="10.000 - 20.000 km" <?php echo $kategori_kilometer == '10.000 - 20.000 km' ? 'selected' : 'null' ?> > 10.000 - 20.000 km</option>
+									<option value="20.000 - 30.000 km" <?php echo $kategori_kilometer == '20.000 - 30.000 km' ? 'selected' : 'null' ?> > 20.000 - 30.000 km</option>
+									<option value="30.000 - 50.000 km" <?php echo $kategori_kilometer == '30.000 - 50.000 km' ? 'selected' : 'null' ?> > 30.000 - 50.000 km</option>
+									<option value=" 50.000 > keatas km" <?php echo $kategori_kilometer == 'Lebih dari 50.000' ? 'selected' : 'null';   ?>  > 50.000 > keatas km</option>
 								</select>
 							</td>
 						</tr>
