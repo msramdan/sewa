@@ -17,6 +17,8 @@
 	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.css" integrity="sha512-J5tsMaZISEmI+Ly68nBDiQyNW6vzBoUlNHGsH8T3DzHTn2h9swZqiMeGm/4WMDxAphi5LMZMNA30LvxaEPiPkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+
 
 	<!--add my style css -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/my-style.css">
@@ -164,10 +166,11 @@
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/dist/js/sweetalert.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/dist/js/sweetalert.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> <!-- untuk sweet alret -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
 	<script src="<?php echo base_url(); ?>assets/dist/js/dataflash.js"></script>
 
 	<!--create for handle dynamic function -->
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/handle-dynamic-field.js?v=02"></script>
+	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/handle-dynamic-field.js?v=<?=date("Y-m-d")?>"></script>
 
 	<script>
 		$(function() {
