@@ -20,6 +20,7 @@ class Pemeliharaan extends CI_Controller
 		$this->load->library('form_validation');
 		$this->load->model('Kendaraan_model');
 		$this->load->model('kategori_model');
+		$this->load->model('Pemeliharaan_detail_model');
 	}
 
 	public function index()
@@ -45,18 +46,10 @@ class Pemeliharaan extends CI_Controller
 				'kendaraan_id' => set_value('kendaraan_id', $row->kendaraan_id),
 				'kategori_kilometer' => set_value('kategori_kilometer', $row->kategori_kilometer),
 				'km_terakhir' => set_value('km_terakhir', $row->km_terakhir),
-				'dinamo_starter' => set_value('dinamo_starter', $row->dinamo_starter),
-				'ket1' => set_value('ket1', $row->ket1),
-				'service_ecu' => set_value('service_ecu', $row->service_ecu),
-				'ket2' => set_value('ket2', $row->ket2),
-				'karburator' => set_value('karburator', $row->karburator),
-				'ket3' => set_value('ket3', $row->ket3),
-				'oli_mesin' => set_value('oli_mesin', $row->oli_mesin),
-				'ket4' => set_value('ket4', $row->ket4),
-				'oli_power_steering' => set_value('oli_power_steering', $row->oli_power_steering),
-				'ket5' => set_value('ket5', $row->ket5),
 				'deksripsi' => set_value('deksripsi', $row->deksripsi),
 				'photo' => set_value('photo', $row->photo),
+				'pemeliharaan_detail' => $this->Pemeliharaan_detail_model->get_by_id_pemeliharaan( $row->pemeliharaan_id ),
+				"kategori" =>  $this->kategori_model->get_all(),
 			);
 			$this->template->load('template', 'pemeliharaan/pemeliharaan_read', $data);
 		} else {
@@ -80,7 +73,7 @@ class Pemeliharaan extends CI_Controller
 			'deksripsi' => set_value('deksripsi'),
 			'photo' => set_value('photo'),
 			"kategori" =>  $this->kategori_model->get_all(),
-		);
+	);
 
 		$this->template->load('template', 'pemeliharaan/pemeliharaan_form', $data);
 	}
@@ -101,27 +94,32 @@ class Pemeliharaan extends CI_Controller
 			$this->upload->do_upload("photo");
 			$data = $this->upload->data();
 			$photo = $data['file_name'];
+			$categories  = $this->input->post('kategori_id');
+			$keterangans = $this->input->post('keterangan');
 
 			$data = array(
 				'jenis_pemeliharaan' => $this->input->post('jenis_pemeliharaan', TRUE),
 				'kendaraan_id' => $this->input->post('kendaraan_id', TRUE),
 				'kategori_kilometer' => $this->input->post('kategori_kilometer', TRUE),
 				'km_terakhir' => $this->input->post('km_terakhir', TRUE),
-				'dinamo_starter' => $this->input->post('dinamo_starter', TRUE),
-				'ket1' => $this->input->post('ket1', TRUE),
-				'service_ecu' => $this->input->post('service_ecu', TRUE),
-				'ket2' => $this->input->post('ket2', TRUE),
-				'karburator' => $this->input->post('karburator', TRUE),
-				'ket3' => $this->input->post('ket3', TRUE),
-				'oli_mesin' => $this->input->post('oli_mesin', TRUE),
-				'ket4' => $this->input->post('ket4', TRUE),
-				'oli_power_steering' => $this->input->post('oli_power_steering', TRUE),
-				'ket5' => $this->input->post('ket5', TRUE),
 				'deksripsi' => $this->input->post('deksripsi', TRUE),
 				'photo' => $photo,
 			);
 
-			$this->Pemeliharaan_model->insert($data);
+			$insert_id = $this->Pemeliharaan_model->insert($data);
+
+
+			//if category available
+			if( $categories ){
+
+				foreach ($categories as $key => $value) {
+					$data = [ "pemeliharaan_id" => $insert_id, "kategori_id" => $value , "keterangan" => $keterangans[ $key ]];
+
+					$this->Pemeliharaan_detail_model->insert( $data );
+				}
+			}
+
+
 			$this->session->set_flashdata('message', 'Create Record Success');
 			redirect(site_url('pemeliharaan'));
 		}
@@ -142,18 +140,11 @@ class Pemeliharaan extends CI_Controller
 				'kendaraan_id' => set_value('kendaraan_id', $row->kendaraan_id),
 				'kategori_kilometer' => set_value('kategori_kilometer', $row->kategori_kilometer),
 				'km_terakhir' => set_value('km_terakhir', $row->km_terakhir),
-				'dinamo_starter' => set_value('dinamo_starter', $row->dinamo_starter),
-				'ket1' => set_value('ket1', $row->ket1),
-				'service_ecu' => set_value('service_ecu', $row->service_ecu),
-				'ket2' => set_value('ket2', $row->ket2),
-				'karburator' => set_value('karburator', $row->karburator),
-				'ket3' => set_value('ket3', $row->ket3),
-				'oli_mesin' => set_value('oli_mesin', $row->oli_mesin),
-				'ket4' => set_value('ket4', $row->ket4),
-				'oli_power_steering' => set_value('oli_power_steering', $row->oli_power_steering),
-				'ket5' => set_value('ket5', $row->ket5),
 				'deksripsi' => set_value('deksripsi', $row->deksripsi),
 				'photo' => set_value('photo', $row->photo),
+				"kategori" =>  $this->kategori_model->get_all(),
+				'pemeliharaan_detail' => $this->Pemeliharaan_detail_model->get_by_id_pemeliharaan( $row->pemeliharaan_id ),
+	
 			);
 			$this->template->load('template', 'pemeliharaan/pemeliharaan_form', $data);
 		} else {
@@ -175,8 +166,9 @@ class Pemeliharaan extends CI_Controller
 			$config['file_name']        = 'File-' . date('ymd') . '-' . substr(sha1(rand()), 0, 10);
 			$this->load->library('upload', $config);
 			$this->upload->initialize($config);
+	        $id = (int)$this->input->post('pemeliharaan_id', TRUE );
+			
 			if ($this->upload->do_upload("photo")) {
-				$id = $this->input->post('pemeliharaan_id');
 				$row = $this->Pemeliharaan_model->get_by_id($id);
 				$data = $this->upload->data();
 				$photo = $data['file_name'];
@@ -189,28 +181,60 @@ class Pemeliharaan extends CI_Controller
 				$photo = $this->input->post('photo_lama');
 			}
 
+	 		$update_detail_id	    = $this->input->post('update_detail_id',TRUE);
+	 		$update_kategori	    = $this->input->post('update_kategori_id',TRUE);
+	 		$update_keterangan      = $this->input->post('update_keterangan',TRUE);
+	 		$kategori	  		    = $this->input->post('kategori_id',TRUE);
+	 		$keterangan    			= $this->input->post('keterangan',TRUE);
+
+
+
+			if( $update_kategori || $update_keterangan ){
+				foreach ($update_kategori as $key => $value) {
+					$data = [ "pemeliharaan_id" => $id, "kategori_id" => ( int )$value , "keterangan" => $update_keterangan[ $key ]];
+					$detail_id = (int) $update_detail_id[ $key ];
+					$this->Pemeliharaan_detail_model->updateByPemeliharaan( $detail_id, $id,  $data );
+				}
+			}
+
+
+			if( $kategori ){
+				foreach ($kategori as $key => $value) {
+					$data = [ "pemeliharaan_id" => $id, "kategori_id" => ( int )$value , "keterangan" => $keterangan[ $key ]];
+
+					$this->Pemeliharaan_detail_model->insert( $data );
+				}
+			}
+
 			$data = array(
 				'jenis_pemeliharaan' => $this->input->post('jenis_pemeliharaan', TRUE),
 				'kendaraan_id' => $this->input->post('kendaraan_id', TRUE),
 				'kategori_kilometer' => $this->input->post('kategori_kilometer', TRUE),
 				'km_terakhir' => $this->input->post('km_terakhir', TRUE),
-				'dinamo_starter' => $this->input->post('dinamo_starter', TRUE),
-				'ket1' => $this->input->post('ket1', TRUE),
-				'service_ecu' => $this->input->post('service_ecu', TRUE),
-				'ket2' => $this->input->post('ket2', TRUE),
-				'karburator' => $this->input->post('karburator', TRUE),
-				'ket3' => $this->input->post('ket3', TRUE),
-				'oli_mesin' => $this->input->post('oli_mesin', TRUE),
-				'ket4' => $this->input->post('ket4', TRUE),
-				'oli_power_steering' => $this->input->post('oli_power_steering', TRUE),
-				'ket5' => $this->input->post('ket5', TRUE),
 				'deksripsi' => $this->input->post('deksripsi', TRUE),
 				'photo' => $photo,
 			);
 
-			$this->Pemeliharaan_model->update($this->input->post('pemeliharaan_id', TRUE), $data);
+			$this->Pemeliharaan_model->update($id, $data);
 			$this->session->set_flashdata('message', 'Update Record Success');
 			redirect(site_url('pemeliharaan'));
+		}
+	}
+
+	public function delete_pemeliharaan_detail($id)
+	{
+		$row = $this->Pemeliharaan_detail_model->get_by_id(decrypt_url($id));
+
+		// var_dump( $row );
+		if ($row) {		
+			$this->Pemeliharaan_detail_model->delete(decrypt_url($id));
+			$this->session->set_flashdata('message', 'Delete Record Success');
+			// redirect(site_url('pemeliharaan'));
+			redirect($_SERVER['HTTP_REFERER']);
+		} else {
+			// header('Content-Type: application/json');
+			// return json_encode( ["success" => false ]);
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 	}
 
@@ -234,22 +258,13 @@ class Pemeliharaan extends CI_Controller
 		}
 	}
 
+
 	public function _rules()
 	{
 		$this->form_validation->set_rules('jenis_pemeliharaan', 'jenis pemeliharaan', 'trim|required');
 		$this->form_validation->set_rules('kendaraan_id', 'kendaraan id', 'trim|required');
 		$this->form_validation->set_rules('kategori_kilometer', 'kategori kilometer', 'trim|required');
 		$this->form_validation->set_rules('km_terakhir', 'km terakhir', 'trim|required');
-		$this->form_validation->set_rules('dinamo_starter', 'dinamo starter', 'trim');
-		$this->form_validation->set_rules('ket1', 'ket1', 'trim');
-		$this->form_validation->set_rules('service_ecu', 'service ecu', 'trim');
-		$this->form_validation->set_rules('ket2', 'ket2', 'trim');
-		$this->form_validation->set_rules('karburator', 'karburator', 'trim');
-		$this->form_validation->set_rules('ket3', 'ket3', 'trim');
-		$this->form_validation->set_rules('oli_mesin', 'oli mesin', 'trim');
-		$this->form_validation->set_rules('ket4', 'ket4', 'trim');
-		$this->form_validation->set_rules('oli_power_steering', 'oli power steering', 'trim');
-		$this->form_validation->set_rules('ket5', 'ket5', 'trim');
 		$this->form_validation->set_rules('deksripsi', 'deksripsi', 'trim|required');
 		$this->form_validation->set_rules('photo', 'photo', 'trim');
 
@@ -284,16 +299,16 @@ class Pemeliharaan extends CI_Controller
 
 
 		$sheet->setCellValue('A1', "DATA PEMELIHARAAN"); // Set column A1
-		$sheet->mergeCells('A1:P2'); // Set Merge Cell A1 to P2
-		$sheet->getStyle('A1:P1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+		$sheet->mergeCells('A1:F2'); // Set Merge Cell A1 to P2
+		$sheet->getStyle('A1:F2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 		$sheet->getStyle('A1')->getFont()->setBold(true)->setSize(14); // Set bold column A1
 
 		$from_cell = 'A';
-		$to_cell   = 'P';
+		$to_cell   = 'F';
 		$label_row = 3;
-		$labels    = ["No","Jenis Pemeliharaan","Kendaraan","Kategori Kilometer","KM Terakhir", "Dinamo Starter","Ket1", "Service Ecu","Ket2","Karbu","Ket3","Oli Mesin","Ket 4","Oli Power Steering","Ket5","Deskripsi"];
+		$labels    = ["No","Jenis Pemeliharaan","Kendaraan","Kategori Kilometer","KM Terakhir","Deskripsi"];
 
-		$width_column = [5,20,20,30,5,20,30,5,30,5,30,10,30,20,30,40];
+		$width_column = [5,20,20,30,20,40];
 
 		//create header  use looping every column  Anf apply style header
 		foreach(range( $from_cell,$to_cell) as $key=>$val) 
@@ -306,7 +321,7 @@ class Pemeliharaan extends CI_Controller
 		$numrow = 4; // Set first row to fill table adalah use four num at rows
 
 		foreach($data as $p){ 
-			$value_data = [$no, $p->jenis_pemeliharaan, $p->nama_kendaraan, $p->kategori_kilometer, $p->km_terakhir, $p->dinamo_starter, $p->ket1,$p->service_ecu, $p->ket2, $p->karburator, $p->ket3,  $p->oli_mesin, $p->ket4, $p->oli_power_steering, $p->ket5,$p->deksripsi ]; 
+			$value_data = [$no, $p->jenis_pemeliharaan, $p->nama_kendaraan, $p->kategori_kilometer, $p->km_terakhir,$p->deksripsi ]; 
 
 			//Push and manage Coloumn
 			foreach(range( $from_cell,$to_cell) as $key=>$val) 
