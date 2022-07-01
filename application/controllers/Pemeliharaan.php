@@ -98,6 +98,7 @@ class Pemeliharaan extends CI_Controller
 			$photo = $data['file_name'];
 			$categories  = $this->input->post('kategori_id');
 			$keterangans = $this->input->post('keterangan');
+			$remainders = $this->input->post('remainder');
 
 
 			$data = array(
@@ -117,7 +118,7 @@ class Pemeliharaan extends CI_Controller
 			if( $categories ){
 
 				foreach ($categories as $key => $value) {
-					$data = [ "pemeliharaan_id" => $insert_id, "kategori_id" => $value , "keterangan" => $keterangans[ $key ]];
+					$data = [ "pemeliharaan_id" => $insert_id, "kategori_id" => $value , "keterangan" => $keterangans[ $key ], "remainder" => $remainders[ $key ]];
 
 					$this->Pemeliharaan_detail_model->insert( $data );
 				}
@@ -189,14 +190,14 @@ class Pemeliharaan extends CI_Controller
 	 		$update_detail_id	    = $this->input->post('update_detail_id',TRUE);
 	 		$update_kategori	    = $this->input->post('update_kategori_id',TRUE);
 	 		$update_keterangan      = $this->input->post('update_keterangan',TRUE);
+	 		$update_remainder      = $this->input->post('update_remainder',TRUE);
 	 		$kategori	  		    = $this->input->post('kategori_id',TRUE);
 	 		$keterangan    			= $this->input->post('keterangan',TRUE);
-
-
+	 		$remainder    			= $this->input->post('remainder',TRUE);
 
 			if( $update_kategori || $update_keterangan ){
 				foreach ($update_kategori as $key => $value) {
-					$data = [ "pemeliharaan_id" => $id, "kategori_id" => ( int )$value , "keterangan" => $update_keterangan[ $key ]];
+					$data = [ "pemeliharaan_id" => $id, "kategori_id" => ( int )$value , "keterangan" => $update_keterangan[ $key ], "remainder" => $update_remainder[ $key ]];
 					$detail_id = (int) $update_detail_id[ $key ];
 					$this->Pemeliharaan_detail_model->updateByPemeliharaan( $detail_id, $id,  $data );
 				}
@@ -205,7 +206,7 @@ class Pemeliharaan extends CI_Controller
 
 			if( $kategori ){
 				foreach ($kategori as $key => $value) {
-					$data = [ "pemeliharaan_id" => $id, "kategori_id" => ( int )$value , "keterangan" => $keterangan[ $key ]];
+					$data = [ "pemeliharaan_id" => $id, "kategori_id" => ( int )$value , "keterangan" => $keterangan[ $key ], "remainder" => $remainder[ $key ]];
 
 					$this->Pemeliharaan_detail_model->insert( $data );
 				}
