@@ -33,7 +33,7 @@ $(document).ready(function () {
       i++;
     });
 
-    let template = "<tr id='" + row + "' ><td><select name='kategori_id[]' class='form-control select2-kategori' aria-label='.form-select' style='width:100% !important' value=''>" + row_option + " <option value='' selected>--Pilih--</option></select></td><td><textarea class='form-control .height-auto'  name='keterangan[]' id='keterangan' placeholder='Keterangan' resizable></textarea></td><td><select name='remainder[]' class='form-control'><option value='1 BULAN'>1 Bulan</option><option value='3 BULAN'>3 Bulan</option><option value='6 BULAN'>6 Bulan</option><option value='1 TAHUN'>1 Tahun</option></select></td><td><button type='button' class='btn btn-sm btn-danger btn-remove-category' id='" + row + "'><i class='icon fas fa-trash'></i></button></td></tr>";
+    let template = "<tr id='" + row + "' ><td><select name='kategori_id[]' class='form-control select2-kategori' aria-label='.form-select' style='width:100% !important' value=''>" + row_option + " <option value='' selected>--Pilih--</option></select></td><td><textarea class='form-control .height-auto'  name='keterangan[]' id='keterangan' placeholder='Keterangan' resizable></textarea></td><td><input type='date' name='remainder[]' class='form-control'></td><td><button type='button' class='btn btn-sm btn-danger btn-remove-category' id='" + row + "'><i class='icon fas fa-trash'></i></button></td></tr>";
 
     $("#dynamic-kategori-field").append(template);
     row++;

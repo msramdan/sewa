@@ -88,7 +88,7 @@
 						<?php if ($this->uri->segment(2) == 'create' || $this->uri->segment(2) == 'create_action') { ?>
 							<tr>
 								<td>Upload File Pendukung <?php echo form_error('photo') ?></td>
-								<td><input type="file" class="form-control" name="photo" id="photo" placeholder="photo" required="" value="" onchange="return validasiEkstensi()" />
+								<td><input type="file" class="form-control" name="photo" id="photo" placeholder="photo"  value="" onchange="return validasiEkstensi()" />
 									<!-- <div id="preview"></div> -->
 								</td>
 							</tr>
@@ -165,17 +165,17 @@
 												</select>
 											</td>
 											<td>
-												<textarea class='form-control height-auto' name='update_keterangan[]'  placeholder='Keterangan'>
-													<?= $value->keterangan ?>
-												</textarea>
+												<textarea class='form-control height-auto' name='update_keterangan[]'  placeholder='Keterangan'><?= $value->keterangan ?></textarea>
 											</td>
 											<td>
-												<select name="update_remainder[]" class="form-control">
+												<input type="date" name="update_remainder[]" class="form-control"  value="<?= $value->remainder?>">
+												<!-- <select name="update_remainder[]" class="form-control">
+													<option value="">-- Pilih --</option>
 													<option value="1 BULAN" <?php echo (  $value->remainder === "1 BULAN" ) ? "selected" : "" ?> > 1 Bulan </option>
 													<option value="3 BULAN" <?php echo (  $value->remainder === "3 BULAN" ) ? "selected" : "" ?> > 3 Bulan </option>
 													<option value="6 BULAN" <?php echo (  $value->remainder === "6 BULAN" ) ? "selected" : "" ?> > 6 Bulan </option>
 													<option value="1 TAHUN" <?php echo (  $value->remainder === "1 TAHUN" ) ? "selected" : "" ?> > 1 Tahun </option>
-												</select>
+												</select> -->
 											</td>
 											<td>
 											<!-- <button type='button' class='btn btn-sm btn-danger btn-remove-category' id="10<?= $value->kategori_id?>" ><i class='icon fas fa-trash'></i></button> -->

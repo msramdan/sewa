@@ -165,9 +165,7 @@
 												</select>
 											</td>
 											<td>
-												<textarea class='form-control height-auto' name='keterangan[]'  placeholder='Keterangan' disabled>
-													<?= $value->keterangan ?>
-												</textarea>
+												<textarea class='form-control height-auto' name='keterangan[]'  placeholder='Keterangan' disabled><?= $value->keterangan ?></textarea>
 											</td>
 											<td>
 												<select class='form-control height-auto'  disabled>
