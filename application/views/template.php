@@ -170,7 +170,7 @@
 	<script src="<?php echo base_url(); ?>assets/dist/js/dataflash.js"></script>
 
 	<!--create for handle dynamic function -->
-	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/handle-dynamic-field.js?v=<?=date("Y-m-d")?>"></script>
+	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/handle-dynamic-field.js?v=<?=date("Y-m-d H-i-s")?>"></script>
 
 	<script>
 		$(function() {
