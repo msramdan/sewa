@@ -136,13 +136,15 @@ CREATE TABLE IF NOT EXISTS `pemeliharaan` (
   PRIMARY KEY (`pemeliharaan_id`),
   KEY `kendaraan_id` (`kendaraan_id`),
   CONSTRAINT `pemeliharaan_ibfk_1` FOREIGN KEY (`kendaraan_id`) REFERENCES `kendaraan` (`kendaraan_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_sewa.pemeliharaan: ~0 rows (approximately)
+-- Dumping data for table db_sewa.pemeliharaan: ~1 rows (approximately)
 DELETE FROM `pemeliharaan`;
 /*!40000 ALTER TABLE `pemeliharaan` DISABLE KEYS */;
 INSERT INTO `pemeliharaan` (`pemeliharaan_id`, `jenis_pemeliharaan`, `kendaraan_id`, `kategori_kilometer`, `km_terakhir`, `deksripsi`, `photo`, `tgl_pemeliharaan`) VALUES
-	(17, 'Insidental', 4, 'Lebih dari 50.000', '60', 'GJGJGJG', 'File-220630-b3bfa0e84e.png', '2022-06-30');
+	(17, 'Insidental', 4, 'Lebih dari 50.000', '60', 'GJGJGJG', 'File-220630-b3bfa0e84e.png', '2022-06-30'),
+	(18, 'Berkala', 6, '20.000 - 30.000 km', '30230', 'Ieu Civic', 'File-220701-d9bc2e794c.png', '2022-07-15'),
+	(19, 'Insidental', 3, '10.000 - 20.000 km', '2000', 'CIKAN', 'File-220701-52958b4fa7.jpg', '2022-07-14');
 /*!40000 ALTER TABLE `pemeliharaan` ENABLE KEYS */;
 
 -- Dumping structure for table db_sewa.pemeliharaan_detail
@@ -151,17 +153,21 @@ CREATE TABLE IF NOT EXISTS `pemeliharaan_detail` (
   `pemeliharaan_id` int(11) NOT NULL,
   `kategori_id` int(11) NOT NULL,
   `keterangan` varchar(250) NOT NULL,
+  `remainder` enum('1 BULAN','3 BULAN','6 BULAN','1 TAHUN') DEFAULT '1 BULAN',
   PRIMARY KEY (`pemeliharaan_detail_id`),
   KEY `pemeliharaan_id` (`pemeliharaan_id`),
   CONSTRAINT `pemeliharaan_detail_ibfk_1` FOREIGN KEY (`pemeliharaan_id`) REFERENCES `pemeliharaan` (`pemeliharaan_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table db_sewa.pemeliharaan_detail: ~2 rows (approximately)
 DELETE FROM `pemeliharaan_detail`;
 /*!40000 ALTER TABLE `pemeliharaan_detail` DISABLE KEYS */;
-INSERT INTO `pemeliharaan_detail` (`pemeliharaan_detail_id`, `pemeliharaan_id`, `kategori_id`, `keterangan`) VALUES
-	(16, 17, 6, '             ini air radiator yah          '),
-	(17, 17, 33, '             ini alternator            ');
+INSERT INTO `pemeliharaan_detail` (`pemeliharaan_detail_id`, `pemeliharaan_id`, `kategori_id`, `keterangan`, `remainder`) VALUES
+	(16, 17, 6, '             ini air radiator yah          ', '1 BULAN'),
+	(17, 17, 33, '             ini alternator            ', '1 BULAN'),
+	(18, 18, 7, '                                       Radiator  = 3 Bulan                                    ', '6 BULAN'),
+	(19, 19, 2, '             INJEKSI MOBIL            ', '3 BULAN'),
+	(20, 19, 3, 'OLI MESIN', '1 TAHUN');
 /*!40000 ALTER TABLE `pemeliharaan_detail` ENABLE KEYS */;
 
 -- Dumping structure for table db_sewa.peminjaman
