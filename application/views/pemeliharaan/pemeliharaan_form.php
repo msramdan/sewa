@@ -116,6 +116,7 @@
 									<tr>
 										<td>Kategori</td>
 										<td>Keterangan</td>
+										<td>Remainder</td>
 										<td>Aksi</td>
 									</tr>
 									<?php 
@@ -167,6 +168,14 @@
 												<textarea class='form-control height-auto' name='update_keterangan[]'  placeholder='Keterangan'>
 													<?= $value->keterangan ?>
 												</textarea>
+											</td>
+											<td>
+												<select name="update_remainder[]" class="form-control">
+													<option value="1 BULAN" <?php echo (  $value->remainder === "1 BULAN" ) ? "selected" : "" ?> > 1 Bulan </option>
+													<option value="3 BULAN" <?php echo (  $value->remainder === "3 BULAN" ) ? "selected" : "" ?> > 3 Bulan </option>
+													<option value="6 BULAN" <?php echo (  $value->remainder === "6 BULAN" ) ? "selected" : "" ?> > 6 Bulan </option>
+													<option value="1 TAHUN" <?php echo (  $value->remainder === "1 TAHUN" ) ? "selected" : "" ?> > 1 Tahun </option>
+												</select>
 											</td>
 											<td>
 											<!-- <button type='button' class='btn btn-sm btn-danger btn-remove-category' id="10<?= $value->kategori_id?>" ><i class='icon fas fa-trash'></i></button> -->

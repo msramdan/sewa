@@ -145,6 +145,7 @@
 									<tr>
 										<td>Kategori</td>
 										<td>Keterangan</td>
+										<td>Remainder</td>
 									</tr>
 									
 									<?php foreach ($pemeliharaan_detail as $key => $value) { ?>
@@ -167,6 +168,11 @@
 												<textarea class='form-control height-auto' name='keterangan[]'  placeholder='Keterangan' disabled>
 													<?= $value->keterangan ?>
 												</textarea>
+											</td>
+											<td>
+												<select class='form-control height-auto'  disabled>
+													<option val=""> <?= $value->remainder ?></option>
+												</select>
 											</td>
 										</tr>
 									<?php } ?>
