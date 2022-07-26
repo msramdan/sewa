@@ -23,7 +23,6 @@
 	<section class="content">
 		<div class="card">
 			<div class="card-body">
-				<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
 					<table id="data-table-default" class="table  table-bordered table-hover table-td-valign-middle">
 						<tr>
 							<td>Jenis Pemeliharaan <?php echo form_error('jenis_pemeliharaan') ?></td>
@@ -78,65 +77,6 @@
 							<td>Km Terakhir <?php echo form_error('km_terakhir') ?></td>
 							<td><input type="text" class="form-control" name="km_terakhir" id="km_terakhir" placeholder="Km Terakhir" value="<?php echo $km_terakhir; ?>" /></td>
 						</tr>
-						<!-- <tr>
-							<td colspan="2"> <b>Service Mesin</b> </td>
-						</tr>
-
-						<tr>
-							<td>
-								<div class="icheck-primary">
-									<input type="checkbox" name="dinamo_starter" id="dinamo_starter" value="Y" <?php echo $dinamo_starter == 'Y' ? 'checked' : 'null' ?> />
-									<label for="dinamo_starter">Dinamo Starter <?php echo form_error('dinamo_starter') ?></label>
-								</div>
-							</td>
-							<td><input type="text" class="form-control" name="ket1" id="ket1" placeholder="Keterangan" value="<?php echo $ket1; ?>" /></td>
-						</tr>
-						<tr>
-							<td>
-								<div class="icheck-primary">
-									<input type="checkbox" name="service_ecu" id="service_ecu" value="Y"  <?php echo $service_ecu == 'Y' ? 'checked' : 'null' ?> />
-									<label for="service_ecu">Service Ecu <?php echo form_error('service_ecu') ?></label>
-								</div>
-							</td>
-							<td><input type="text" class="form-control" name="ket2" id="ket2" placeholder="Keterangan" value="<?php echo $ket2; ?>" /></td>
-						</tr>
-						<tr>
-							<td>
-								<div class="icheck-primary">
-									<input type="checkbox" name="karburator" id="karburator" value="Y"  <?php echo $karburator == 'Y' ? 'checked' : 'null' ?> />
-									<label for="karburator">Karburator <?php echo form_error('karburator') ?></label>
-								</div>
-							</td>
-							<td><input type="text" class="form-control" name="ket3" id="ket3" placeholder="Keterangan" value="<?php echo $ket3; ?>" /></td>
-						</tr>
-
-						<tr>
-							<td colspan="2"> <b>Service Oli-Oli</b> </td>
-						</tr>
-
-						<tr>
-							<td>
-								<div class="icheck-primary">
-									<input type="checkbox" name="oli_mesin" id="oli_mesin" value="Y"  <?php echo $oli_mesin == 'Y' ? 'checked' : 'null' ?> />
-									<label for="oli_mesin">Oli Mesin <?php echo form_error('oli_mesin') ?></label>
-								</div>
-							</td>
-							<td><input type="text" class="form-control" name="ket4" id="ket4" placeholder="Keterangan" value="<?php echo $ket4; ?>" /></td>
-						</tr>
-
-						<tr>
-							<td>
-								<div class="icheck-primary">
-									<input type="checkbox" name="oli_power_steering" value="Y"  id="oli_power_steering" <?php echo $oli_power_steering == 'Y' ? 'checked' : 'null' ?> />
-									<label for="oli_power_steering">Oli Power Steering <?php echo form_error('oli_power_steering') ?></label>
-								</div>
-							</td>
-							<td><input type="text" class="form-control" name="ket5" id="ket5" placeholder="Keterangan" value="<?php echo $ket5; ?>" /></td>
-						</tr>
-						<tr>
-							<td>Deksripsi <?php echo form_error('deksripsi') ?></td>
-							<td> <textarea class="form-control" rows="3" name="deksripsi" id="deksripsi" placeholder="Deksripsi"><?php echo $deksripsi; ?></textarea></td>
-						</tr> -->
 						<tr>
 							<td>Detail Item Service</td>
 							<td>
@@ -146,6 +86,9 @@
 										<td>Kategori</td>
 										<td>Keterangan</td>
 										<td>Tanggal Pemeliharaan</td>
+										<td>Status Cek</td>
+										<td>Komentar</td>
+										<td>Aksi</td>
 									</tr>
 									
 									<?php foreach ($pemeliharaan_detail as $key => $value) { ?>
@@ -172,6 +115,19 @@
 													<option val=""> <?= $value->remainder ?></option>
 												</select>
 											</td>
+											<form action="<?= base_url() ?>pemeliharaan/cekPemeliharaan" method="POST">
+												<input type="hidden" value="<?= $value->pemeliharaan_detail_id  ?>" name="pemeliharaan_detail_id">
+												<input type="hidden" value="<?= $this->uri->segment(3) ?>" name="uri">
+												<?php if($value->status_cek ==1 || $value->status_cek =='1' ){ ?>
+													<td><input class="form-control" type="checkbox" value="1" name="status_cek" id="" required checked></td>
+												<?php }else{ ?>
+													<td><input class="form-control" type="checkbox" value="1" name="status_cek" id="" required></td>
+												<?php } ?>
+												
+												<td><textarea class='form-control height-auto' name='komentar'  placeholder='komentar' required><?= $value->komentar ?></textarea></td>
+												<td><button type="submit" class="btn btn-success btn-sm "><i class="fa fa-check" aria-hidden="true"></i> Simpan</button></td>
+											</form>
+											
 										</tr>
 									<?php } ?>
 								</table>

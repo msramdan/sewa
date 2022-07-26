@@ -49,7 +49,7 @@ class Pemeliharaan extends CI_Controller
 				'km_terakhir' => set_value('km_terakhir', $row->km_terakhir),
 				'deksripsi' => set_value('deksripsi', $row->deksripsi),
 				'photo' => set_value('photo', $row->photo),
-				'pemeliharaan_detail' => $this->Pemeliharaan_detail_model->get_by_id_pemeliharaan( $row->pemeliharaan_id ),
+				'pemeliharaan_detail' => $this->Pemeliharaan_detail_model->get_by_id_pemeliharaan($row->pemeliharaan_id),
 				"kategori" =>  $this->kategori_model->get_all(),
 			);
 			$this->template->load('template', 'pemeliharaan/pemeliharaan_read', $data);
@@ -75,7 +75,7 @@ class Pemeliharaan extends CI_Controller
 			'deksripsi' => set_value('deksripsi'),
 			'photo' => set_value('photo'),
 			"kategori" =>  $this->kategori_model->get_all(),
-	);
+		);
 
 		$this->template->load('template', 'pemeliharaan/pemeliharaan_form', $data);
 	}
@@ -115,12 +115,12 @@ class Pemeliharaan extends CI_Controller
 
 
 			//if category available
-			if( $categories ){
+			if ($categories) {
 
 				foreach ($categories as $key => $value) {
-					$data = [ "pemeliharaan_id" => $insert_id, "kategori_id" => $value , "keterangan" => $keterangans[ $key ], "remainder" => $remainders[ $key ]];
+					$data = ["pemeliharaan_id" => $insert_id, "kategori_id" => $value, "keterangan" => $keterangans[$key], "remainder" => $remainders[$key]];
 
-					$this->Pemeliharaan_detail_model->insert( $data );
+					$this->Pemeliharaan_detail_model->insert($data);
 				}
 			}
 
@@ -149,8 +149,8 @@ class Pemeliharaan extends CI_Controller
 				'deksripsi' => set_value('deksripsi', $row->deksripsi),
 				'photo' => set_value('photo', $row->photo),
 				"kategori" =>  $this->kategori_model->get_all(),
-				'pemeliharaan_detail' => $this->Pemeliharaan_detail_model->get_by_id_pemeliharaan( $row->pemeliharaan_id ),
-	
+				'pemeliharaan_detail' => $this->Pemeliharaan_detail_model->get_by_id_pemeliharaan($row->pemeliharaan_id),
+
 			);
 			$this->template->load('template', 'pemeliharaan/pemeliharaan_form', $data);
 		} else {
@@ -172,8 +172,8 @@ class Pemeliharaan extends CI_Controller
 			$config['file_name']        = 'File-' . date('ymd') . '-' . substr(sha1(rand()), 0, 10);
 			$this->load->library('upload', $config);
 			$this->upload->initialize($config);
-	        $id = (int)$this->input->post('pemeliharaan_id', TRUE );
-			
+			$id = (int)$this->input->post('pemeliharaan_id', TRUE);
+
 			if ($this->upload->do_upload("photo")) {
 				$row = $this->Pemeliharaan_model->get_by_id($id);
 				$data = $this->upload->data();
@@ -187,28 +187,28 @@ class Pemeliharaan extends CI_Controller
 				$photo = $this->input->post('photo_lama');
 			}
 
-	 		$update_detail_id	    = $this->input->post('update_detail_id',TRUE);
-	 		$update_kategori	    = $this->input->post('update_kategori_id',TRUE);
-	 		$update_keterangan      = $this->input->post('update_keterangan',TRUE);
-	 		$update_remainder      = $this->input->post('update_remainder',TRUE);
-	 		$kategori	  		    = $this->input->post('kategori_id',TRUE);
-	 		$keterangan    			= $this->input->post('keterangan',TRUE);
-	 		$remainder    			= $this->input->post('remainder',TRUE);
+			$update_detail_id	    = $this->input->post('update_detail_id', TRUE);
+			$update_kategori	    = $this->input->post('update_kategori_id', TRUE);
+			$update_keterangan      = $this->input->post('update_keterangan', TRUE);
+			$update_remainder      = $this->input->post('update_remainder', TRUE);
+			$kategori	  		    = $this->input->post('kategori_id', TRUE);
+			$keterangan    			= $this->input->post('keterangan', TRUE);
+			$remainder    			= $this->input->post('remainder', TRUE);
 
-			if( $update_kategori || $update_keterangan ){
+			if ($update_kategori || $update_keterangan) {
 				foreach ($update_kategori as $key => $value) {
-					$data = [ "pemeliharaan_id" => $id, "kategori_id" => ( int )$value , "keterangan" => $update_keterangan[ $key ], "remainder" => $update_remainder[ $key ]];
-					$detail_id = (int) $update_detail_id[ $key ];
-					$this->Pemeliharaan_detail_model->updateByPemeliharaan( $detail_id, $id,  $data );
+					$data = ["pemeliharaan_id" => $id, "kategori_id" => (int)$value, "keterangan" => $update_keterangan[$key], "remainder" => $update_remainder[$key]];
+					$detail_id = (int) $update_detail_id[$key];
+					$this->Pemeliharaan_detail_model->updateByPemeliharaan($detail_id, $id,  $data);
 				}
 			}
 
 
-			if( $kategori ){
+			if ($kategori) {
 				foreach ($kategori as $key => $value) {
-					$data = [ "pemeliharaan_id" => $id, "kategori_id" => ( int )$value , "keterangan" => $keterangan[ $key ], "remainder" => $remainder[ $key ]];
+					$data = ["pemeliharaan_id" => $id, "kategori_id" => (int)$value, "keterangan" => $keterangan[$key], "remainder" => $remainder[$key]];
 
-					$this->Pemeliharaan_detail_model->insert( $data );
+					$this->Pemeliharaan_detail_model->insert($data);
 				}
 			}
 
@@ -233,7 +233,7 @@ class Pemeliharaan extends CI_Controller
 		$row = $this->Pemeliharaan_detail_model->get_by_id(decrypt_url($id));
 
 		// var_dump( $row );
-		if ($row) {		
+		if ($row) {
 			$this->Pemeliharaan_detail_model->delete(decrypt_url($id));
 			$this->session->set_flashdata('message', 'Delete Record Success');
 			// redirect(site_url('pemeliharaan'));
@@ -255,13 +255,33 @@ class Pemeliharaan extends CI_Controller
 				$target_file = './assets/dist/img/photo/' . $row->photo;
 				unlink($target_file);
 			}
-			
+
 			$this->Pemeliharaan_model->delete(decrypt_url($id));
 			$this->session->set_flashdata('message', 'Delete Record Success');
 			redirect(site_url('pemeliharaan'));
 		} else {
 			$this->session->set_flashdata('message', 'Record Not Found');
 			redirect(site_url('pemeliharaan'));
+		}
+	}
+
+	public function cekPemeliharaan()
+	{
+		$pemeliharaan_detail_id = $this->input->post('pemeliharaan_detail_id');
+		$uri = $this->input->post('uri');
+		$komentar = $this->input->post('komentar');
+		$status_cek = $this->input->post('status_cek');
+
+		$update = $this->db->query("UPDATE pemeliharaan_detail
+			SET status_cek='$status_cek',
+			komentar='$komentar'
+			WHERE pemeliharaan_detail_id='$pemeliharaan_detail_id'");
+		if ($update) {
+			$this->session->set_flashdata('message', 'Update cek pemeliharran berhasil');
+			redirect(site_url('pemeliharaan/read/'.$uri));
+		} else {
+			$this->session->set_flashdata('error', 'Update cek pemeliharaan gagal');
+			redirect(site_url('pemeliharaan/read/' . $uri));
 		}
 	}
 
@@ -285,22 +305,24 @@ class Pemeliharaan extends CI_Controller
 		force_download('assets/dist/img/photo/' . $gambar, NULL);
 	}
 
-		
-	public function export( $type ){
-		$data = $this->Pemeliharaan_model->get_all();
-		
 
-		if( $type === "pdf" ){ 
-			return  $this->load->view( "report/pemeliharaan_pdf", [ "data" => $data  ] );
+	public function export($type)
+	{
+		$data = $this->Pemeliharaan_model->get_all();
+
+
+		if ($type === "pdf") {
+			return  $this->load->view("report/pemeliharaan_pdf", ["data" => $data]);
 		};
-		
-		return $this->generateExcel( $data );
+
+		return $this->generateExcel($data);
 	}
 
-	private function generateExcel( $data ){
+	private function generateExcel($data)
+	{
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
-		
+
 		// create variable to handle layout row & column
 		$style_row = $this->layoutexcel::get_style_row();
 		$style_col = $this->layoutexcel::get_style_col();
@@ -308,50 +330,46 @@ class Pemeliharaan extends CI_Controller
 		$from_cell = 'A';
 		$to_cell   = 'G';
 
-		$sheet->setCellValue($from_cell.'1', "DATA PEMELIHARAAN"); // Set column A1
-		$sheet->mergeCells($from_cell.'1:'. $to_cell .'2'); // Set Merge Cell A1 to P2
-		$sheet->getStyle($from_cell.'1:'.$to_cell.'2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-		$sheet->getStyle($from_cell.'1')->getFont()->setBold(true)->setSize(14); // Set bold column A1
+		$sheet->setCellValue($from_cell . '1', "DATA PEMELIHARAAN"); // Set column A1
+		$sheet->mergeCells($from_cell . '1:' . $to_cell . '2'); // Set Merge Cell A1 to P2
+		$sheet->getStyle($from_cell . '1:' . $to_cell . '2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+		$sheet->getStyle($from_cell . '1')->getFont()->setBold(true)->setSize(14); // Set bold column A1
 
 		$label_row = 3;
-		$labels    = ["No","Jenis Pemeliharaan","Jadwal Pemeliharaan","Kendaraan","Kategori Kilometer","KM Terakhir","Deskripsi"];
+		$labels    = ["No", "Jenis Pemeliharaan", "Jadwal Pemeliharaan", "Kendaraan", "Kategori Kilometer", "KM Terakhir", "Deskripsi"];
 
-		$width_column = [5,20,20,20,30,20,40];
+		$width_column = [5, 20, 20, 20, 30, 20, 40];
 
 		//create header  use looping every column  Anf apply style header
-		foreach(range( $from_cell,$to_cell) as $key=>$val) 
-		{ 
-			$sheet->setCellValue($val.$label_row, $labels[$key]);
-			$sheet->getStyle($val.$label_row)->applyFromArray($style_col);
-		}  
+		foreach (range($from_cell, $to_cell) as $key => $val) {
+			$sheet->setCellValue($val . $label_row, $labels[$key]);
+			$sheet->getStyle($val . $label_row)->applyFromArray($style_col);
+		}
 
 		$no = 1; //starter 1
 		$numrow = 4; // Set first row to fill table adalah use four num at rows
 
-		foreach($data as $p){ 
-			$value_data = [$no, $p->jenis_pemeliharaan, $p->tgl_pemeliharaan ,$p->nama_kendaraan, $p->kategori_kilometer, $p->km_terakhir,$p->deksripsi ]; 
+		foreach ($data as $p) {
+			$value_data = [$no, $p->jenis_pemeliharaan, $p->tgl_pemeliharaan, $p->nama_kendaraan, $p->kategori_kilometer, $p->km_terakhir, $p->deksripsi];
 
 			//Push and manage Coloumn
-			foreach(range( $from_cell,$to_cell) as $key=>$val) 
-			{ 
-			
-				$sheet->setCellValue( $val.$numrow, $value_data[ $key ] );
-				$sheet->getStyle( $val.$numrow )->applyFromArray($style_row);
-			}  
-		  
-		  $no++; // increase every looping
-		  $numrow++; // increase every looping
+			foreach (range($from_cell, $to_cell) as $key => $val) {
+
+				$sheet->setCellValue($val . $numrow, $value_data[$key]);
+				$sheet->getStyle($val . $numrow)->applyFromArray($style_row);
+			}
+
+			$no++; // increase every looping
+			$numrow++; // increase every looping
 		}
 
-		foreach(range( $from_cell,$to_cell) as $key=>$val) 
-			{ 
-				$sheet->getColumnDimension( $val )->setWidth( $width_column[ $key ] );
-			}  
-		
+		foreach (range($from_cell, $to_cell) as $key => $val) {
+			$sheet->getColumnDimension($val)->setWidth($width_column[$key]);
+		}
+
 		$sheet->getDefaultRowDimension()->setRowHeight(-1);
 
-		$sheet->getPageSetup()->setOrientation
-		(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+		$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
 
 		// Set judul file excel nya
 		$sheet->setTitle("Laporan Data Pemeliharaan");
@@ -361,7 +379,6 @@ class Pemeliharaan extends CI_Controller
 		header('Cache-Control: max-age=0');
 		$writer = new Xlsx($spreadsheet);
 		$writer->save('php://output');
-	  
 	}
 }
 

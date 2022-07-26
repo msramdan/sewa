@@ -1,3 +1,40 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel"> Komentar Pengembalian </h5>
+			</div>
+			<form action="<?= base_url() ?>peminjaman/updatePengembalian" method="POST">
+				<div class="modal-body">
+					<label for="">Komentar</label>
+					<textarea class="form-control" id="komentar_pengembalian" name="komentar_pengembalian" cols="30" rows="5" required></textarea>
+					<input type="hidden" name="statusPeminjaman" value="" id="statusPeminjaman" >
+					<input type="hidden" name="peminjaman_id_modal" value="" id="peminjaman_id_modal" >
+
+					<div class="mt-3" id="status_balik" >
+						<label for="">Status Waktu Pengembalian</label>
+						<select name="status_tepat_waktu" id="status_tepat_waktu" required class="form-control">
+							<option value="" selected disabled>-- Pilih --</option>
+							<option value="Tepat waktu">Tepat waktu</option>
+							<option value="Telat">Telat</option>
+							<option value="Tidak ada konfirmasi">Tidak ada konfirmasi</option>
+						</select>
+					</div>
+					
+					<input type="hidden" name="peminjaman_id_modal" value="" id="peminjaman_id_modal" >
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" id="buttonModal" class="btn "> <span id="buttonStatus"></span></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
 <div class="content-wrapper">
 	<section class="content-header">
 		<div class="container-fluid">
@@ -64,18 +101,17 @@
 										if ($this->session->userdata('level_id') == 2) {
 											echo anchor(site_url('peminjaman/read/' . encrypt_url($peminjaman->peminjaman_id)), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
 											echo '  ';
-											// echo anchor(site_url('peminjaman/update_pengembalian/' . encrypt_url($peminjaman->peminjaman_id)), '<i class="fas fa-pencil-alt" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
-											// echo '  ';
 											echo anchor(site_url('peminjaman/delete_pengembalian/' . encrypt_url($peminjaman->peminjaman_id)), '<i class="fas fa-trash-alt" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
-										} else { ?>
-											<a href="<?php base_url() ?>approved_pengembalian/<?= $peminjaman->peminjaman_id ?>" id="download" class="btn btn-sm btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Approved</a>
-											<a href="<?php base_url() ?>reject_pengembalian/<?= $peminjaman->peminjaman_id ?>" id="download" class="btn btn-sm btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Reject</a>
+										} else { ?> 
+											<a href="#" id="download" class="btn btn-sm btn-primary rejectStatus" data-peminjaman_id_modal="<?= $peminjaman->peminjaman_id ?>"
+											data-status="Approved" data-no_peminjaman="<?= $peminjaman->no_peminjaman ?>" data-komentar_pengembalian="<?= $peminjaman->komentar_pengembalian ?>" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-check" aria-hidden="true"></i> Approved</a>
+											<a href="#" id="download" class="btn btn-sm btn-danger rejectStatus" data-peminjaman_id_modal="<?= $peminjaman->peminjaman_id ?>"
+											data-status="Reject" data-no_peminjaman="<?= $peminjaman->no_peminjaman ?>" data-komentar_pengembalian="<?= $peminjaman->komentar_pengembalian ?>"  data-toggle="modal" data-target="#exampleModal"><i class="fa fa-times" aria-hidden="true"></i> Reject</a>
 											<a href="<?php base_url() ?>read/<?= encrypt_url($peminjaman->peminjaman_id)  ?>" class="btn btn-success btn-sm read_data"><i class="fas fa-eye" aria-hidden="true"></i></a>
 										<?php } ?>
 									<?php } else { ?>
 										<?php if ($this->session->userdata('level_id') == 2) { ?>
 											<a href="<?= base_url() ?>peminjaman/read/<?= encrypt_url($peminjaman->peminjaman_id)  ?>" class="btn btn-success btn-sm read_data"><i class="fas fa-eye" aria-hidden="true"></i></a>
-											<!-- <button href="#" class="btn btn-primary btn-sm read_data" disabled><i class="fas fa-pencil-alt" aria-hidden="true"></i></button> -->
 											<button href="#" class="btn btn-danger btn-sm read_data" disabled><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
 										<?php } else { ?>
 											<button href="#" id="download" class="btn btn-sm btn-primary" disabled><i class="fa fa-check" aria-hidden="true"></i> Approved</button>
@@ -94,3 +130,27 @@
 </div>
 </section>
 </div>
+
+<script>
+	$('.rejectStatus').click(function() {
+		var peminjaman_id = $(this).data('peminjaman_id_modal');
+		var status = $(this).data('status');
+		var komentar_pengembalian = $(this).data('komentar_pengembalian');
+		$('#exampleModal #status').text(status);
+		$('#exampleModal #buttonStatus').text(status);
+		$('#exampleModal #peminjaman_id_modal').val(peminjaman_id);
+		$('#exampleModal #komentar_pengembalian').val(komentar_pengembalian);
+		if (status == "Reject") {
+			$("#buttonModal").addClass("btn-danger").removeClass("btn-primary")
+			$("#status_balik").addClass("d-none")
+			$("#status_tepat_waktu").removeAttr('required');
+			$('#exampleModal #statusPeminjaman').val(status);
+		} else if (status == "Approved") {
+			$("#buttonModal").addClass("btn-primary").removeClass("btn-danger")
+			$('#exampleModal #statusPeminjaman').val(status);
+			$("#status_balik").removeClass("d-none");
+			$("#status_tepat_waktu").addAttr('required');
+		}
+		
+	});
+</script>

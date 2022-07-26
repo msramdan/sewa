@@ -45,6 +45,8 @@ class Peminjaman extends CI_Controller
 		if ($row) {
 			$data = array(
 				'peminjaman_id' => $row->peminjaman_id,
+				'komentar_pengembalian' => $row->komentar_pengembalian,
+				'status_tepat_waktu' => $row->status_tepat_waktu,
 				'komentar' => $row->komentar,
 				'no_peminjaman' => $row->no_peminjaman,
 				'karyawan_id' => $row->nama_pegawai,
@@ -311,33 +313,65 @@ class Peminjaman extends CI_Controller
 	}
 
 
-	public function approved_pengembalian($id)
-	{
+	public function updatePengembalian(){
+		
+		$id = $this->input->post('peminjaman_id_modal');
+		$status_tepat_waktu = $this->input->post('status_tepat_waktu');
+		$status = $this->input->post('statusPeminjaman');
+		$komentar = $this->input->post('komentar_pengembalian');
 		$data = $this->db->query("SELECT * from peminjaman where peminjaman_id='$id'")->row();
 
-		$statusPeminjaman = $this->db->query("UPDATE peminjaman
-        SET status_pengembalian='Approved'
-        WHERE peminjaman_id='$id'");
+		if($data){
+			$dateNow = date('Y-m-d H:i:s');
+			$statusPeminjaman = $this->db->query("UPDATE peminjaman
+			SET status_pengembalian='$status',
+			komentar_pengembalian='$komentar',
+			status_tepat_waktu='$status_tepat_waktu',
+			tanggal_approved='$dateNow'
+			WHERE peminjaman_id='$id'");
 
-		// update status kendaraan not availabe
-		if ($statusPeminjaman) {
-			$this->db->query("UPDATE kendaraan
-			SET status='available'
-			WHERE kendaraan_id ='$data->kendaraan_id'");
+
+
+				if ($status == "Approved") {
+					if ($statusPeminjaman) {
+						$this->db->query("UPDATE kendaraan
+						SET status='available'
+						WHERE kendaraan_id ='$data->kendaraan_id'");
+					}
+				}
+			$this->session->set_flashdata('message', 'Pengembalian Berhasil di Approved');
+			redirect(site_url('peminjaman/kembali'));
+		}else{
+			$this->session->set_flashdata('error', 'Data tidak ditemukan');
+			redirect(site_url('peminjaman/kembali'));
 		}
-
-		$this->session->set_flashdata('message', 'Pengembalian Berhasil di Approved');
-		redirect(site_url('peminjaman/kembali'));
+		
 	}
 
-	public function reject_pengembalian($id)
-	{
-		$this->db->query("UPDATE peminjaman
-        SET status_pengembalian='Reject'
-        WHERE peminjaman_id='$id'");
-		$this->session->set_flashdata('message', 'Pengembalian di Reject');
-		redirect(site_url('peminjaman/kembali'));
-	}
+
+	// public function approved_pengembalian($id)
+	// {
+	// 	$data = $this->db->query("SELECT * from peminjaman where peminjaman_id='$id'")->row();
+
+	// 	$statusPeminjaman = $this->db->query("UPDATE peminjaman
+    //     SET status_pengembalian='Approved'
+    //     WHERE peminjaman_id='$id'");
+
+	// 	// update status kendaraan not availabe
+		
+
+	// 	$this->session->set_flashdata('message', 'Pengembalian Berhasil di Approved');
+	// 	redirect(site_url('peminjaman/kembali'));
+	// }
+
+	// public function reject_pengembalian($id)
+	// {
+	// 	$this->db->query("UPDATE peminjaman
+    //     SET status_pengembalian='Reject'
+    //     WHERE peminjaman_id='$id'");
+	// 	$this->session->set_flashdata('message', 'Pengembalian di Reject');
+	// 	redirect(site_url('peminjaman/kembali'));
+	// }
 
 	public function download($gambar)
 	{

@@ -47,7 +47,7 @@
 					<td><?php echo $kendaraan_id; ?> - <?php echo $nama_kendaraan; ?></td>
 				</tr>
 				<tr>
-					<td>Tanggal Request</td>
+					<td>Tanggal Peminjaman</td>
 					<td><?php echo $tanggal_request; ?></td>
 				</tr>
 				<tr>
@@ -96,6 +96,14 @@
 				<tr>
 					<td>Status Pengembalian</td>
 					<td><?php echo $status_pengembalian; ?></td>
+				</tr>
+				<tr>
+					<td>Komentar Pengembalian</td>
+					<td><?php echo $komentar_pengembalian; ?></td>
+				</tr>
+				<tr>
+					<td>Status Waktu Pengembalian</td>
+					<td><?php echo $status_tepat_waktu; ?></td>
 				</tr>
 			</table>
 
