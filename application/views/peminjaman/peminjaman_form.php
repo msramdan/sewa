@@ -39,20 +39,25 @@
 							</tr>
 						<?php } ?>
 						<tr>
-							<td>kendaraan</td><?php echo form_error('kendaraan_id') ?></td>
+							<td>kendaraan <?php echo form_error('kendaraan_id') ?></td>
 							<td>
 								<select name="kendaraan_id" class="form-control theSelect">
 									<option value="">-- Pilih -- </option>
 									<?php foreach ($kendaraan as $key => $data) { ?>
 										<?php if ($kendaraan_id == $data->kendaraan_id) { ?>
-											<option value="<?php echo $data->kendaraan_id ?>" selected><?php echo $data->nama_kendaraan ?></option>
+											<option value="<?php echo $data->kendaraan_id ?>" selected><?php echo $data->nopol ?> - <?php echo $data->nama_kendaraan ?></option>
 										<?php } else { ?>
-											<option value="<?php echo $data->kendaraan_id ?>"><?php echo $data->nama_kendaraan ?></option>
+											<option value="<?php echo $data->kendaraan_id ?>"><?php echo $data->nopol ?> - <?php echo $data->nama_kendaraan ?></option>
 										<?php } ?>
 									<?php } ?>
 								</select>
 							</td>
 						</tr>
+						<tr>
+							<td>Tanggal Peminjaman <?php echo form_error('tanggal_request') ?></td>
+							<td><input type="datetime-local" class="form-control" name="tanggal_request" id="tanggal_request" placeholder="Estimasi Pengembalian" value="<?php echo $estimasi_pengembalian; ?>" /></td>
+						</tr>
+
 						<tr>
 							<td>Estimasi Pengembalian <?php echo form_error('estimasi_pengembalian') ?></td>
 							<td><input type="datetime-local" class="form-control" name="estimasi_pengembalian" id="estimasi_pengembalian" placeholder="Estimasi Pengembalian" value="<?php echo $estimasi_pengembalian; ?>" /></td>

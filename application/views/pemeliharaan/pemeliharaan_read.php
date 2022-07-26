@@ -145,7 +145,7 @@
 									<tr>
 										<td>Kategori</td>
 										<td>Keterangan</td>
-										<td>Remainder</td>
+										<td>Tanggal Pemeliharaan</td>
 									</tr>
 									
 									<?php foreach ($pemeliharaan_detail as $key => $value) { ?>

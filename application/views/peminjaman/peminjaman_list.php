@@ -1,3 +1,27 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel"> <span id="status"></span> Permintaan No : <span id="no_peminjaman_reject"></span> </h5>
+			</div>
+			<form action="<?= base_url() ?>peminjaman/updatePeminjaman" method="POST">
+				<div class="modal-body">
+					<textarea class="form-control" id="komentar" name="komentar" cols="30" rows="5" required></textarea>
+					<input type="hidden" name="statusPeminjaman" value="" id="statusPeminjaman" >
+					<input type="hidden" name="peminjaman_id_modal" value="" id="peminjaman_id_modal" >
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" id="buttonModal" class="btn "> <span id="buttonStatus"></span></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
 <div class="content-wrapper">
 	<section class="content-header">
 		<div class="container-fluid">
@@ -20,24 +44,27 @@
 
 			<div class="card-body" style="overflow-x: scroll;">
 
-			<!-- begin add report button  -->
-				<div class="btn-group">
+				<!-- begin add report button  -->
+				<div class="btn-group" style="float: left;">
 					<button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 						<i class="icon fas fa-file"></i> &nbsp; Laporan
 					</button>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="<?= base_url( "/peminjaman/export/pdf") ?>" target="_blank"><i class="icon fas fa-file-pdf"></i> &nbsp; Pdf</a>
-						<a class="dropdown-item" href="<?= base_url( "/peminjaman/export/xls") ?>" target="_blank"><i class="icon fas fa-file-excel"></i> &nbsp; Excel</a>
+						<a class="dropdown-item" href="<?= base_url("/peminjaman/export/pdf") ?>" target="_blank"><i class="icon fas fa-file-pdf"></i> &nbsp; Pdf</a>
+						<a class="dropdown-item" href="<?= base_url("/peminjaman/export/xls") ?>" target="_blank"><i class="icon fas fa-file-excel"></i> &nbsp; Excel</a>
 					</div>
-				</div>
-			<!-- end add report button -->
-
+				</div>&nbsp;
+				<!-- end add report button -->
 				<?php if ($this->session->userdata('level_id') == 2) { ?>
-					<div style="padding-bottom: 10px;">
 						<?php echo anchor(site_url('peminjaman/create'), '<i class="fas fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm tambah_data"'); ?>
-					</div>
+					
 				<?php } ?>
-				<table id="data-table-default" class="table table-bordered table-hover">
+
+				
+				<br>
+				<br>
+				<div class="table-responsive">
+				<table id="" class="table table-bordered table-hover">
 					<thead>
 						<tr>
 							<th>No</th>
@@ -47,13 +74,12 @@
 							<?php } ?>
 
 							<th>Nopol</th>
-							<th>Tanggal Request</th>
+							<th>Tanggal Peminjaman</th>
 							<th>Estimasi Pengembalian</th>
 							<th>Tujuan</th>
-							<!-- <th>Keperluan</th> -->
 							<th>Status Request</th>
 							<th>Status Pengembalian</th>
-							<th>Action</th>
+							<th width="300px">Action</th>
 						</tr>
 					</thead>
 					<tbody><?php $no = 1;
@@ -77,25 +103,29 @@
 
 									if ($peminjaman->status_request == 'Waiting') {
 										if ($this->session->userdata('level_id') == 2) {
-											echo anchor(site_url('peminjaman/read/' . encrypt_url($peminjaman->peminjaman_id)), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
+											echo anchor(site_url('peminjaman/read/' . encrypt_url($peminjaman->peminjaman_id)), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm"');
 											echo '  ';
-											echo anchor(site_url('peminjaman/update/' . encrypt_url($peminjaman->peminjaman_id)), '<i class="fas fa-pencil-alt" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
+											echo anchor(site_url('peminjaman/update/' . encrypt_url($peminjaman->peminjaman_id)), '<i class="fas fa-pencil-alt" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm "');
 											echo '  ';
-											echo anchor(site_url('peminjaman/delete/' . encrypt_url($peminjaman->peminjaman_id)), '<i class="fas fa-trash-alt" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
+											echo anchor(site_url('peminjaman/delete/' . encrypt_url($peminjaman->peminjaman_id)), '<i class="fas fa-trash-alt" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm " Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
 										} else { ?>
-											<a href="<?php base_url() ?>peminjaman/approved/<?= $peminjaman->peminjaman_id ?>" id="download" class="btn btn-sm btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Approved</a>
-											<a href="<?php base_url() ?>peminjaman/reject/<?= $peminjaman->peminjaman_id ?>" id="download" class="btn btn-sm btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Reject</a>
-											<a href="<?php base_url() ?>peminjaman/read/<?= encrypt_url($peminjaman->peminjaman_id)  ?>" class="btn btn-success btn-sm read_data"><i class="fas fa-eye" aria-hidden="true"></i></a>
+											<a href="#" data-toggle="modal"
+											data-peminjaman_id_modal="<?= $peminjaman->peminjaman_id ?>"
+											data-status="Approved" data-komentar="<?= $peminjaman->komentar ?>" data-no_peminjaman="<?= $peminjaman->no_peminjaman ?>" data-komentar="<?= $peminjaman->komentar ?>" data-target="#exampleModal" class="btn btn-sm btn-primary rejectStatus"><i class="fa fa-check" aria-hidden="true"></i> Approved</a>
+											<a href="#" data-toggle="modal"
+											data-peminjaman_id_modal="<?= $peminjaman->peminjaman_id ?>"
+											data-status="Reject" data-komentar="<?= $peminjaman->komentar ?>" data-no_peminjaman="<?= $peminjaman->no_peminjaman ?>" data-komentar="<?= $peminjaman->komentar ?>" data-target="#exampleModal" class="btn btn-sm btn-danger rejectStatus"><i class="fa fa-times" aria-hidden="true"></i> Reject</a>
+											<a href="<?php base_url() ?>peminjaman/read/<?= encrypt_url($peminjaman->peminjaman_id)  ?>" class="btn btn-success btn-sm"><i class="fas fa-eye" aria-hidden="true"></i></a>
 										<?php } ?>
 									<?php } else { ?>
 										<?php if ($this->session->userdata('level_id') == 2) { ?>
-											<a href="<?= base_url() ?>peminjaman/read/<?= encrypt_url($peminjaman->peminjaman_id)  ?>" class="btn btn-success btn-sm read_data"><i class="fas fa-eye" aria-hidden="true"></i></a>
-											<button href="#" class="btn btn-primary btn-sm read_data" disabled><i class="fas fa-pencil-alt" aria-hidden="true"></i></button>
-											<button href="#" class="btn btn-danger btn-sm read_data" disabled><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+											<a href="<?= base_url() ?>peminjaman/read/<?= encrypt_url($peminjaman->peminjaman_id)  ?>" class="btn btn-success btn-sm "><i class="fas fa-eye" aria-hidden="true"></i></a>
+											<button href="#" class="btn btn-primary btn-sm " disabled><i class="fas fa-pencil-alt" aria-hidden="true"></i></button>
+											<button href="#" class="btn btn-danger btn-sm " disabled><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
 										<?php } else { ?>
 											<button href="#" id="download" class="btn btn-sm btn-primary" disabled><i class="fa fa-check" aria-hidden="true"></i> Approved</button>
 											<button href="#" id="download" class="btn btn-sm btn-danger" disabled><i class="fa fa-times" aria-hidden="true"></i> Reject</button>
-											<a href="<?= base_url() ?>peminjaman/read/<?= encrypt_url($peminjaman->peminjaman_id)  ?>" class="btn btn-success btn-sm read_data"><i class="fas fa-eye" aria-hidden="true"></i></a>
+											<a href="<?= base_url() ?>peminjaman/read/<?= encrypt_url($peminjaman->peminjaman_id)  ?>" class="btn btn-success btn-sm "><i class="fas fa-eye" aria-hidden="true"></i></a>
 										<?php } ?>
 									<?php } ?>
 								</td>
@@ -103,9 +133,32 @@
 						<?php } ?>
 					</tbody>
 				</table>
+				</div>
 			</div>
 		</div>
 </div>
 </div>
 </section>
 </div>
+
+<script>
+	$('.rejectStatus').click(function() {
+		var peminjaman_id = $(this).data('peminjaman_id_modal');
+		var no_peminjaman = $(this).data('no_peminjaman');
+		var status = $(this).data('status');
+		var komentar = $(this).data('komentar');
+		$('#exampleModal #no_peminjaman_reject').text(no_peminjaman);
+		$('#exampleModal #status').text(status);
+		$('#exampleModal #buttonStatus').text(status);
+		$('#exampleModal #peminjaman_id_modal').val(peminjaman_id);
+		if (status == "Reject") {
+			$("#buttonModal").addClass("btn-danger").removeClass("btn-primary")
+			$('#exampleModal #statusPeminjaman').val(status);
+		} else if (status == "Approved") {
+			$("#buttonModal").addClass("btn-primary").removeClass("btn-danger")
+			$('#exampleModal #statusPeminjaman').val(status);
+		}
+		$('#exampleModal #komentar').val(komentar);
+	});
+</script>
+</script>

@@ -5,23 +5,15 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Aplikasi Peminjaman</title>
-
-	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-	<!-- Font Awesome -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/fontawesome-free/css/all.min.css">
-	<!-- Theme style -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/dist/css/adminlte.min.css">
-	<!-- DataTables -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.css" integrity="sha512-J5tsMaZISEmI+Ly68nBDiQyNW6vzBoUlNHGsH8T3DzHTn2h9swZqiMeGm/4WMDxAphi5LMZMNA30LvxaEPiPkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
-
-
-	<!--add my style css -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/my-style.css">
+	<!-- <script src="<?= base_url() ?>assets/plugins/jquery/jquery.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -155,7 +147,7 @@
 		<aside class="control-sidebar control-sidebar-dark">
 		</aside>
 	</div>
-	<script src="<?= base_url() ?>assets/plugins/jquery/jquery.min.js"></script>
+
 	<script src="<?= base_url() ?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
 	<script src="<?= base_url() ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -165,11 +157,8 @@
 	<script src="<?= base_url() ?>assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/dist/js/sweetalert.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/dist/js/sweetalert.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> <!-- untuk sweet alret -->
-	<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<script src="<?php echo base_url(); ?>assets/dist/js/dataflash.js"></script>
-
-	<!--create for handle dynamic function -->
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/handle-dynamic-field.js?v=<?=date("Y-m-d H-i-s")?>"></script>
 
 	<script>

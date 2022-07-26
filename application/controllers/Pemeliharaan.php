@@ -270,6 +270,7 @@ class Pemeliharaan extends CI_Controller
 	{
 		$this->form_validation->set_rules('jenis_pemeliharaan', 'jenis pemeliharaan', 'trim|required');
 		$this->form_validation->set_rules('kendaraan_id', 'kendaraan id', 'trim|required');
+		$this->form_validation->set_rules('tgl_pemeliharaan', 'Jadwal Pemeliharaan', 'trim|required');
 		$this->form_validation->set_rules('kategori_kilometer', 'kategori kilometer', 'trim|required');
 		$this->form_validation->set_rules('km_terakhir', 'km terakhir', 'trim|required');
 		$this->form_validation->set_rules('deksripsi', 'deksripsi', 'trim|required');
@@ -313,7 +314,7 @@ class Pemeliharaan extends CI_Controller
 		$sheet->getStyle($from_cell.'1')->getFont()->setBold(true)->setSize(14); // Set bold column A1
 
 		$label_row = 3;
-		$labels    = ["No","Jenis Pemeliharaan","Tanggal Pemeliharaan","Kendaraan","Kategori Kilometer","KM Terakhir","Deskripsi"];
+		$labels    = ["No","Jenis Pemeliharaan","Jadwal Pemeliharaan","Kendaraan","Kategori Kilometer","KM Terakhir","Deskripsi"];
 
 		$width_column = [5,20,20,20,30,20,40];
 

@@ -42,7 +42,7 @@
 						<tr>
 							<th>No</th>
 							<th>Jenis Pemeliharaan</th>
-							<th>Tanggal Pemeliharaan</th>
+							<th>Jadwal Pemeliharaan</th>
 							<th>Kendaraan</th>
 							<th>Kategori Kilometer</th>
 							<th>Km Terakhir</th>

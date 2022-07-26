@@ -45,7 +45,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>Tgl Pemeliharaan <?php echo form_error('tgl_pemeliharaan') ?></td>
+							<td>Jadwal Pemeliharaan <?php echo form_error('tgl_pemeliharaan') ?></td>
 							<td><input type="date" class="form-control" name="tgl_pemeliharaan" id="tgl_pemeliharaan" placeholder="Tgl Pemeliharaan" value="<?php echo $tgl_pemeliharaan; ?>" /></td>
 						</tr>
 						<tr>
@@ -116,7 +116,7 @@
 									<tr>
 										<td>Kategori</td>
 										<td>Keterangan</td>
-										<td>Remainder</td>
+										<td>Tanggal Pemeliharaan</td>
 										<td>Aksi</td>
 									</tr>
 									<?php 

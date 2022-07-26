@@ -4,6 +4,7 @@
 			<div class="row mb-2">
 				<div class="col-sm-6">
 					<h4>PEMINJAMAN READ</h4>
+					
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
@@ -12,11 +13,14 @@
 					</ol>
 				</div>
 			</div>
+			<a href="<?= base_url() ?>peminjaman/cetakPdf/<?=$peminjaman_id; ?>" class="btn btn-danger btn-sm"><i class="fas fa-print" aria-hidden="true"></i> Cetak Detail</a>
 		</div>
 	</section>
 
 	<section class="content">
+	
 		<div class="card">
+			
 			<table id="data-table-default" class="table table-hover table-bordered table-td-valign-middle">
 				<tr>
 					<td style="width: 40%;">No Peminjaman</td>
@@ -61,6 +65,10 @@
 				<tr>
 					<td>Status Request</td>
 					<td><?php echo $status_request; ?></td>
+				</tr>
+				<tr>
+					<td>Komentar Peminjaman</td>
+					<td><?php echo $komentar; ?></td>
 				</tr>
 				<tr>
 					<td>Tanggal Diperiksa

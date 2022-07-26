@@ -45,6 +45,7 @@ class Peminjaman extends CI_Controller
 		if ($row) {
 			$data = array(
 				'peminjaman_id' => $row->peminjaman_id,
+				'komentar' => $row->komentar,
 				'no_peminjaman' => $row->no_peminjaman,
 				'karyawan_id' => $row->nama_pegawai,
 				'nama_unit' => $row->nama_unit,
@@ -154,7 +155,7 @@ class Peminjaman extends CI_Controller
 				'no_peminjaman' => $this->input->post('no_peminjaman', TRUE),
 				'karyawan_id' => $pegawai_id,
 				'kendaraan_id' => $this->input->post('kendaraan_id', TRUE),
-				'tanggal_request' => date('Y-m-d H:i:s'),
+				'tanggal_request' =>  $this->input->post('tanggal_request', TRUE),
 				'estimasi_pengembalian' => $this->input->post('estimasi_pengembalian', TRUE),
 				'tujuan' => $this->input->post('tujuan', TRUE),
 				'keperluan' => $this->input->post('keperluan', TRUE),
@@ -208,7 +209,7 @@ class Peminjaman extends CI_Controller
 				'no_peminjaman' => $this->input->post('no_peminjaman', TRUE),
 				'karyawan_id' => $pegawai_id,
 				'kendaraan_id' => $this->input->post('kendaraan_id', TRUE),
-				'tanggal_request' => date('Y-m-d H:i:s'),
+				'tanggal_request' => $this->input->post('tanggal_request', TRUE),
 				'estimasi_pengembalian' => $this->input->post('estimasi_pengembalian', TRUE),
 				'tujuan' => $this->input->post('tujuan', TRUE),
 				'keperluan' => $this->input->post('keperluan', TRUE),
@@ -266,7 +267,7 @@ class Peminjaman extends CI_Controller
 		$this->form_validation->set_rules('no_peminjaman', 'no peminjaman', 'trim|required');
 		// $this->form_validation->set_rules('karyawan_id', 'karyawan id', 'trim|required');
 		$this->form_validation->set_rules('kendaraan_id', 'kendaraan id', 'trim|required');
-		// $this->form_validation->set_rules('tanggal_request', 'tanggal request', 'trim|required');
+		$this->form_validation->set_rules('tanggal_request', 'tanggal request', 'trim|required');
 		$this->form_validation->set_rules('estimasi_pengembalian', 'estimasi pengembalian', 'trim|required');
 		$this->form_validation->set_rules('tujuan', 'tujuan', 'trim|required');
 		$this->form_validation->set_rules('keperluan', 'keperluan', 'trim|required');
@@ -279,38 +280,36 @@ class Peminjaman extends CI_Controller
 		$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
 	}
 
-	public function approved($id)
-	{
-		$data = $this->db->query("SELECT * from peminjaman where peminjaman_id='$id'")->row();
 
+	public function updatePeminjaman()
+	{
+		$id = $this->input->post('peminjaman_id_modal');
+		$status = $this->input->post('statusPeminjaman');
+		$komentar = $this->input->post('komentar');
+
+		$query = $this->db->query("SELECT * from peminjaman where peminjaman_id='$id'")->row();
 		// update status peminjaman
 		$dateNow = date('Y-m-d H:i:s');
-		$statusPeminjaman = $this->db->query("UPDATE peminjaman
-        SET status_request='Approved',
+		$data = "UPDATE peminjaman
+        SET status_request='$status',
+		komentar='$komentar',
 		tanggal_approved='$dateNow'
-        WHERE peminjaman_id='$id'");
+        WHERE peminjaman_id='$id'";
 
-		// update status kendaraan not availabe
-		if ($statusPeminjaman) {
-			$this->db->query("UPDATE kendaraan
-			SET status='Not available'
-			WHERE kendaraan_id ='$data->kendaraan_id'");
+		$statusPeminjaman = $this->db->query($data);
+
+		if ($status == "Approved") {
+			if ($statusPeminjaman) {
+				$this->db->query("UPDATE kendaraan
+				SET status='Not available'
+				WHERE kendaraan_id ='$query->kendaraan_id'");
+			}
 		}
 
-		$this->session->set_flashdata('message', 'peminjaman Berhasil di Approved');
+		$this->session->set_flashdata('message', 'Peminjaman Berhasil di ' . $status);
 		redirect(site_url('peminjaman'));
 	}
 
-	public function reject($id)
-	{
-		$dateNow = date('Y-m-d H:i:s');
-		$this->db->query("UPDATE peminjaman
-        SET status_request='Reject',
-		tanggal_approved='$dateNow'
-        WHERE peminjaman_id='$id'");
-		$this->session->set_flashdata('message', 'peminjaman di Reject');
-		redirect(site_url('peminjaman'));
-	}
 
 	public function approved_pengembalian($id)
 	{
@@ -354,6 +353,31 @@ class Peminjaman extends CI_Controller
 		return  $this->generateExcel( $data );
 	}
 
+	public function cetakPdf($id){
+			$row = $this->Peminjaman_model->get_by_id($id);
+			$data = array(
+				'peminjaman_id' => $row->peminjaman_id,
+				'no_peminjaman' => $row->no_peminjaman,
+				'karyawan_id' => $row->nama_pegawai,
+				'nama_unit' => $row->nama_unit,
+				'kepala_unit' => $row->kepala_unit,
+				'ttd' => $row->ttd,
+				'kendaraan_id' => $row->nopol,
+				'nama_kendaraan' => $row->nama_kendaraan,
+				'tanggal_request' => $row->tanggal_request,
+				'estimasi_pengembalian' => $row->estimasi_pengembalian,
+				'tujuan' => $row->tujuan,
+				'keperluan' => $row->keperluan,
+				'tanggal_approved' => $row->tanggal_approved,
+				'status_request' => $row->status_request,
+				'tanggal_pengembalian' => $row->tanggal_pengembalian,
+				'photo' => $row->photo,
+				'status_pengembalian' => $row->status_pengembalian,
+			);
+		return $this->load->view("report/cetak_detail", [ "data" => $data ]);
+	}
+
+	
 
 	private function generateExcel( $data ){
 		$spreadsheet = new Spreadsheet();
